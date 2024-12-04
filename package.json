@@ -15,7 +15,9 @@
     "postinstall": "wxt prepare"
   },
   "dependencies": {
+    "axios": "^1.7.8",
     "react": "^18.3.1",
+    "react-date-range": "^2.0.1",
     "react-dom": "^18.3.1"
   },
   "devDependencies": {

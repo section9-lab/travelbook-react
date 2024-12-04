@@ -1,27 +1,22 @@
-import React from 'react';
-import SquarePage from './Page/SquarePage';
-import PersonalCenterPage from './Page/PersonalCenterPage';
-import Logo from '../../assets/logo.svg';
+import React, { useState } from 'react';
+import SquarePage from './Component/SquarePage.bak';
+import PersonalCenterPage from './Component/PersonalCenterPage.bak';
 import './App.css';
-import { LanguageProvider, useLanguage } from './Component/LanguageContext';
 
 // Logo Component
-const AppLogo = () => {
-  const { language } = useLanguage(); // 获取当前语言状态
-
-  return (
-    <div className="app-logo">
-      <img src={Logo} height="25" width="25" alt="Logo" />
-        <span>
-          {language === 'zh' ? ' 路书' : ' TravelBook'}
-        </span>
-    </div>
-  );
-};
+const AppLogo = () => (
+  <div className="app-logo">
+    🌍 TravelMate
+  </div>
+);
 
 // Language Toggle Component
 const LanguageToggle = () => {
-  const { language, toggleLanguage } = useLanguage();
+  const [language, setLanguage] = useState('zh');
+
+  const toggleLanguage = () => {
+    setLanguage(language === 'zh' ? 'en' : 'zh');
+  };
 
   return (
     <button className="language-toggle" onClick={toggleLanguage}>
@@ -33,7 +28,6 @@ const LanguageToggle = () => {
 // Main App Component
 const App = () => {
   const [activePage, setActivePage] = useState('square');
-  const { t } = useLanguage();
 
   return (
     <div className="app-container">
@@ -51,26 +45,17 @@ const App = () => {
           className={`nav-button ${activePage === 'square' ? 'active' : ''}`}
           onClick={() => setActivePage('square')}
         >
-          {t('square')}
+          广场
         </button>
         <button 
           className={`nav-button ${activePage === 'personal' ? 'active' : ''}`}
           onClick={() => setActivePage('personal')}
         >
-          {t('personalCenter')}
+          个人中心
         </button>
       </div>
     </div>
   );
 };
 
-// Wrap App with LanguageProvider
-const AppWrapper = () => {
-  return (
-    <LanguageProvider>
-      <App />
-    </LanguageProvider>
-  );
-};
-
-export default AppWrapper;
+export default App;

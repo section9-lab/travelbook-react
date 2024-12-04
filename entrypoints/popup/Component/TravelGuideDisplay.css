@@ -1,0 +1,147 @@
+/* 旅行指南卡片容器 */
+.travel-guide-display-card {
+    width: 100%; /* 宽度设置为100% */
+    max-width: 100%; /* 最大宽度为800px */
+    margin: 5px auto; /* 上下外边距为20px，左右自动（居中） */
+    border: 1px solid #e0e0e0; /* 边框为1px的灰色 */
+    border-radius: 8px; /* 边框圆角为8px */
+    box-shadow: 0 4px 8px rgba(0, 0.2, 0.4, 0.6); /* 阴影效果 */
+  }
+  
+  /* 旅行指南头部 */
+  .travel-guide-header {
+    padding: 10px; /* 内边距为15px */
+    border-bottom: 1px solid #e0e0e0; /* 底部边框为1px的灰色 */
+  }
+  
+  /* 旅行指南标题 */
+  .travel-guide-title {
+    width: 100%; /* 宽度设置为100% */
+    font-size: 15px; /* 字体大小为24px */
+    font-weight: bold; /* 字体加粗 */
+    border: none; /* 无边框 */
+    border-bottom: 2px solid #e0e0e0; /* 底部边框为2px的灰色 */
+    padding-bottom: 20px; /* 底部内边距为5px */
+    outline: none; /* 无轮廓 */
+  }
+  
+  /* 旅行指南标题获得焦点时的样式 */
+  .travel-guide-title:focus {
+    border-bottom-color: #007bff; /* 底部边框颜色变为蓝色 */
+  }
+  
+  /* 旅行指南内容 */
+  .travel-guide-content {
+    padding: 10px; /* 内边距为20px */
+    width: 90%; /* 宽度设置为100% */
+  }
+  
+  /* 景点部分和行程部分 */
+  .attractions-section,
+  .itinerary-section {
+    margin-bottom: 20px; /* 底部外边距为20px */
+  }
+  
+  /* 景点部分和行程部分的标题 */
+  .attractions-section h3,
+  .itinerary-section h3 {
+    font-size: 12px; /* 字体大小为20px */
+    margin-bottom: 10px; /* 底部外边距为10px */
+  }
+  
+  /* 景点文本区域和每日活动文本区域 */
+  .attractions-textarea,
+  .day-activities-textarea {
+    width: 100%; /* 宽度设置为100% */
+    min-height: 100px; /* 最小高度为100px */
+    padding: 4px; /* 内边距为10px */
+    border: 1px solid #e0e0e0; /* 边框为1px的灰色 */
+    border-radius: 4px; /* 边框圆角为4px */
+    resize: vertical; /* 可垂直调整大小 */
+    outline: none; /* 无轮廓 */
+  }
+  
+  /* 景点文本区域和每日活动文本区域获得焦点时的样式 */
+  .attractions-textarea:focus,
+  .day-activities-textarea:focus {
+    border-color: #007bff; /* 边框颜色变为蓝色 */
+  }
+  
+  /* 每日计划 */
+  .day-plan {
+    margin-bottom: 5px; /* 底部外边距为15px */
+    padding: 5px; /* 内边距为15px */
+    border: 1px solid #e0e0e0; /* 边框为1px的灰色 */
+    border-radius: 4px; /* 边框圆角为4px */
+  }
+  
+  /* 每日计划头部 */
+  .day-header {
+    height: 25px;
+    display: flex; /* 显示为弹性盒子 */
+    justify-content: space-between; /* 子项间隔均匀分布 */
+    align-items: center; /* 子项垂直居中 */
+    margin-bottom: 2px; /* 底部外边距为10px */
+  }
+  
+  /* 删除按钮 */
+  .remove-day-btn {
+    color: #dc3545; /* 文字颜色为红色 */
+    background: none; /* 无背景 */
+    border: none; /* 无边框 */
+    font-size: x-small;
+    cursor: pointer; /* 鼠标悬停时显示指针 */
+  }
+  
+  /* 添加按钮 */
+  .add-day-btn {
+    width: 100%; /* 宽度设置为100% */
+    padding: 10px; /* 内边距为10px */
+    background-color: #f8f9fa; /* 背景颜色为浅灰色 */
+    border: 1px solid #e0e0e0; /* 边框为1px的灰色 */
+    border-radius: 4px; /* 边框圆角为4px */
+    cursor: pointer; /* 鼠标悬停时显示指针 */
+  }
+  
+  /* 添加按钮悬停时的样式 */
+  .add-day-btn:hover {
+    background-color: #e9ecef; /* 背景颜色变深 */
+  }
+  
+  /* 指南操作按钮组 */
+  .guide-actions {
+    display: flex; /* 显示为弹性盒子 */
+    justify-content: flex-end; /* 子项靠右对齐 */
+    gap: 10px; /* 子项间隔为10px */
+  }
+  
+  /* 保存按钮和取消按钮 */
+  .save-btn,
+  .cancel-btn {
+    padding: 10px 20px; /* 内边距为10px 20px */
+    border: none; /* 无边框 */
+    border-radius: 4px; /* 边框圆角为4px */
+    cursor: pointer; /* 鼠标悬停时显示指针 */
+  }
+  
+  /* 保存按钮样式 */
+  .save-btn {
+    background-color: #28a745; /* 背景颜色为绿色 */
+    color: white; /* 文字颜色为白色 */
+  }
+  
+  /* 取消按钮样式 */
+  .cancel-btn {
+    background-color: #dc3545; /* 背景颜色为红色 */
+    color: white; /* 文字颜色为白色 */
+  }
+  
+  /* 保存按钮悬停时的样式 */
+  .save-btn:hover {
+    background-color: #218838; /* 背景颜色变深 */
+  }
+  
+  /* 取消按钮悬停时的样式 */
+  .cancel-btn:hover {
+    background-color: #c82333; /* 背景颜色变深 */
+  }

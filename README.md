@@ -6,7 +6,8 @@ dev this project
 
 ```
 # 1、download 
-git clone ${this_git_project_url}
+git clone https://github.com/section9-lab/travelbook-react.git
+cd travelbook-react
 
 # 2、install lib
 yarn install 
