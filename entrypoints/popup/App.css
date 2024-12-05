@@ -5,9 +5,9 @@ body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
     background-color: #f4f4f4;
     /* 背景颜色，可以根据需要调整 */
-    background-color: rgba(255, 255, 255, 0.5);
+    background-color: rgba(255, 255, 255, 0.915);
     /* 模糊效果，数值越大模糊程度越高 */
-    backdrop-filter: blur(20px);
+    /* backdrop-filter: blur(20px); */
   }
   
   .app-container {
@@ -102,7 +102,6 @@ body {
     background-color: white;
     border: 1px solid #ddd;
     border-radius: 10px;
-    padding: 15px;
     margin-bottom: 10px;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
   }
@@ -115,7 +114,6 @@ body {
     background-color: white;
     border: 1px solid #ddd;
     border-radius: 10px;
-    padding: 15px;
     margin-bottom: 10px;
   }
 
@@ -159,35 +157,35 @@ body {
     bottom: 0;
     background-color: rgba(0,0,0,0.5);
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
   }
   
   .modal-content {
     background-color: white;
-    padding: 20px;
-    width: 90%;
+    padding: 5px;
+    width: 95%;
     border: 1px solid #e0e0e0; /* 边框为1px的灰色 */
-    border-radius: 25px; /* 边框圆角为8px */
+    border-radius: 10px; /* 边框圆角为8px */
     box-shadow: 0 4px 8px rgba(0, 0.2, 0.4, 0.6); /* 阴影效果 */
-    /* max-width: 400px; */
   }
   
   .modal-content input {
     width: 100%;
-    padding: 10px;
-    margin-bottom: 10px;
+    padding: 7px;
+    margin-bottom: 5px;
     border: 1px solid #ddd;
     border-radius: 5px;
   }
   
   .modal-actions {
     display: flex;
-    justify-content: space-between;
+    /* justify-content: space-between;按钮之间间隔模式 */
   }
   
   .modal-actions button {
-    padding: 10px 20px;
+    padding: 5px 10px;
     border: none;
     border-radius: 5px;
   }
@@ -196,8 +194,15 @@ body {
     background-color: #4CAF50;
     color: white;
   }
+  .modal-actions button:nth-child(2) {
+    margin-left: 10px; /* 左侧距离 */
+    background-color: #4CAF50;
+    color: white;
+  }
+
   
   .modal-actions button:last-child {
+    margin-left: 35%; /* 左侧距离 */
     background-color: #f44336;
     color: white;
   }
@@ -237,6 +242,11 @@ body {
   }
 
   .guide-response-container {
-    margin-top: 10px;
-    width: 100%;
+    width: 98%;
+    background-color: white;
+    padding: 5px;
+    width: 95%;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0.2, 0.4, 0.6);
   }

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useLanguage } from './LanguageContext';
 import DateTimeRangePicker from './DateTimeRangePicker';
 import TravelGuideDisplay from './TravelGuideDisplay';
+import SelectorAI from './SelectorAI';
 import axios from 'axios';
 
 
@@ -88,12 +89,27 @@ const AddTravelPlanModal = ({ isOpen, onClose, onSubmit }) => {
         </div>
         
         {isDatePickerOpen && (
-          <DateTimeRangePicker
-            startDate={startTime}
-            endDate={endTime}
-            onChange={handleDateRangeChange}
-            onClose={() => setIsDatePickerOpen(false)}
-          />
+          <div
+            className="calendar-popup"
+            style={{
+              position: 'absolute',
+              top: '10px',
+              width: '95%',
+              left: '0',
+              zIndex: 1000,
+              backgroundColor: 'white',
+              border: '1px solid #ccc',
+              borderRadius: '10px',
+              boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+            }}>
+
+            <DateTimeRangePicker
+              startDate={startTime}
+              endDate={endTime}
+              onChange={handleDateRangeChange}
+              onClose={() => setIsDatePickerOpen(false)}
+            />
+          </div>
         )}
         <div className='input-source-location'>
           <input
@@ -116,10 +132,11 @@ const AddTravelPlanModal = ({ isOpen, onClose, onSubmit }) => {
         </div>
 
         <div className="modal-actions">
+          <SelectorAI/>
           <button onClick={handleSubmit}>{t('generateGuide')}</button>
           <button onClick={onClose}>{t('cancel')}</button>
         </div>
-
+      </div>
         {/* 在此处根据response结果展开卡片，如果请求结果为空，或没有请求则不展开 */}
         {apiResponse && (
           <div className="guide-response-container">
@@ -130,7 +147,6 @@ const AddTravelPlanModal = ({ isOpen, onClose, onSubmit }) => {
             />
           </div>
         )}
-      </div>
     </div>
   );
 };
