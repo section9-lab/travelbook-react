@@ -1,9 +1,8 @@
-import React from 'react';
 import SquarePage from './Page/SquarePage';
-import PersonalCenterPage from './Page/PersonalCenterPage';
+import PersonalPage from './Page/PersonalPage';
+import { LanguageProvider, useLanguage } from './Component/LanguageContext';
 import Logo from '../../assets/logo.svg';
 import './App.css';
-import { LanguageProvider, useLanguage } from './Component/LanguageContext';
 
 // Logo Component
 const AppLogo = () => {
@@ -43,7 +42,7 @@ const App = () => {
       </div>
 
       <div className="app-content">
-        {activePage === 'square' ? <SquarePage /> : <PersonalCenterPage />}
+        {activePage === 'square' ? <SquarePage /> : <PersonalPage />}
       </div>
 
       <div className="app-footer">
@@ -57,7 +56,7 @@ const App = () => {
           className={`nav-button ${activePage === 'personal' ? 'active' : ''}`}
           onClick={() => setActivePage('personal')}
         >
-          {t('personalCenter')}
+          {t('personal')}
         </button>
       </div>
     </div>

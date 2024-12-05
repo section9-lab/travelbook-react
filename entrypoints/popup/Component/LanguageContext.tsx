@@ -4,7 +4,7 @@ import React, { createContext, useState, useContext, ReactNode } from 'react';
 const translations = {
   zh: {
     square: '广场',
-    personalCenter: '个人中心',
+    personal: '个人',
     addTravelPlan: '添加旅行计划',
     destination: '目的地',
     source: '出发地',
@@ -18,7 +18,7 @@ const translations = {
   },
   en: {
     square: 'Square',
-    personalCenter: 'Personal Center', 
+    personal: 'Personal', 
     addTravelPlan: 'Add New Travel Plan',
     source: 'Source',
     destination: 'Destination',

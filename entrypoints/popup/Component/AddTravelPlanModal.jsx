@@ -33,16 +33,17 @@ const AddTravelPlanModal = ({ isOpen, onClose, onSubmit }) => {
       // 模拟API调用
       const response = await axios.get('https://reqres.in/api/users?page=2');
       // const response = await axios.post('http://127.0.0.1:5000/travel_plans',travelPlan);
-      
+
       // 根据实际需求构造响应数据
       const mockGuideData = response.data.data ? {
         title: `Travel Guide: ${source} to ${destination}`,
         attractions: 'Explore the beautiful landscapes and local culture.',
         itinerary: Array.from({ length: Math.ceil((new Date(endTime) - new Date(startTime)) / (1000 * 60 * 60 * 24)) }, (_, i) => ({
-          day: i + 1,
+          day: Math.floor(i/2),
           activities: `Day ${i + 1} activities based on user ${response.data.data[0].first_name}'s recommendations...`
         }))
       } : null;
+      console.info(mockGuideData)
 
       setApiResponse(mockGuideData);
     } catch (error) {
