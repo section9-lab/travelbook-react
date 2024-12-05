@@ -3,7 +3,7 @@ import './TravelGuideDisplay.css';
 
 const TravelGuideDisplay = ({ initialGuide, onSave, onCancel }) => {
   const [guide, setGuide] = useState(initialGuide || {
-    title: 'My Travel Guide',
+    title: '',
     attractions: '',
     itinerary: [
       { day: 1, activities: '' }
@@ -89,7 +89,7 @@ const TravelGuideDisplay = ({ initialGuide, onSave, onCancel }) => {
                     onClick={() => removeDay(index)}
                     className="remove-day-btn"
                   >
-                    Remove Day
+                    Remove
                   </button>
                 )}
               </div>
@@ -106,7 +106,7 @@ const TravelGuideDisplay = ({ initialGuide, onSave, onCancel }) => {
             onClick={addDay}
             className="add-day-btn"
           >
-            + Add Day
+            + Add
           </button>
         </div>
 

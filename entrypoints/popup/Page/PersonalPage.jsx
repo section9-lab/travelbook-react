@@ -3,7 +3,7 @@ import { useLanguage } from '../Component/LanguageContext';
 import AddTravelPlanModal from '../Component/AddTravelPlanModal';
 import TravelGuideDisplay from '../Component/TravelGuideDisplay';
 
-const PersonalCenterPage = () => {
+const PersonalPage = () => {
   const { t } = useLanguage();
   const [plans, setPlans] = useState([
     { 
@@ -105,4 +105,4 @@ const PersonalCenterPage = () => {
   );
 };
 
-export default PersonalCenterPage;
+export default PersonalPage;

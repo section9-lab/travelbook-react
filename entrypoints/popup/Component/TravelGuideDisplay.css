@@ -5,12 +5,13 @@
     margin: 5px auto; /* 上下外边距为20px，左右自动（居中） */
     border: 1px solid #e0e0e0; /* 边框为1px的灰色 */
     border-radius: 8px; /* 边框圆角为8px */
-    box-shadow: 0 4px 8px rgba(0, 0.2, 0.4, 0.6); /* 阴影效果 */
+    box-shadow: 0 2px 10px rgba(0, 0.2, 0.4, 0.6); /* 阴影效果 */
   }
   
   /* 旅行指南头部 */
   .travel-guide-header {
-    padding: 10px; /* 内边距为15px */
+    padding: 5px; /* 内边距为15px */
+    width: 85%;
     border-bottom: 1px solid #e0e0e0; /* 底部边框为1px的灰色 */
   }
   
@@ -21,7 +22,7 @@
     font-weight: bold; /* 字体加粗 */
     border: none; /* 无边框 */
     border-bottom: 2px solid #e0e0e0; /* 底部边框为2px的灰色 */
-    padding-bottom: 20px; /* 底部内边距为5px */
+    padding-bottom: 5px; /* 底部内边距为5px */
     outline: none; /* 无轮廓 */
   }
   
@@ -32,14 +33,20 @@
   
   /* 旅行指南内容 */
   .travel-guide-content {
-    padding: 10px; /* 内边距为20px */
+    padding: 5px; /* 内边距为20px */
     width: 90%; /* 宽度设置为100% */
   }
   
   /* 景点部分和行程部分 */
-  .attractions-section,
+  .attractions-section {
+    padding: 5px,5px;
+  }
   .itinerary-section {
-    margin-bottom: 20px; /* 底部外边距为20px */
+    display: flex;
+    flex-direction: column; /* 子元素竖向排列 */
+    margin-bottom: 5px; /* 底部外边距为20px */
+    height: 150px; /* 固定容器的高度，可以根据需要调整 */
+    overflow-y: auto; /* 超出部分显示垂直滚动条 */
   }
   
   /* 景点部分和行程部分的标题 */
@@ -52,8 +59,8 @@
   /* 景点文本区域和每日活动文本区域 */
   .attractions-textarea,
   .day-activities-textarea {
-    width: 100%; /* 宽度设置为100% */
-    min-height: 100px; /* 最小高度为100px */
+    width: 95%; /* 宽度设置为100% */
+    min-height: 50px; /* 最小高度为100px */
     padding: 4px; /* 内边距为10px */
     border: 1px solid #e0e0e0; /* 边框为1px的灰色 */
     border-radius: 4px; /* 边框圆角为4px */
@@ -69,10 +76,10 @@
   
   /* 每日计划 */
   .day-plan {
-    margin-bottom: 5px; /* 底部外边距为15px */
-    padding: 5px; /* 内边距为15px */
+    margin-bottom: 1px; /* 底部外边距为15px */
+    padding: 2px,2px; /* 内边距为15px */
     border: 1px solid #e0e0e0; /* 边框为1px的灰色 */
-    border-radius: 4px; /* 边框圆角为4px */
+    border-radius: 5px; /* 边框圆角为4px */
   }
   
   /* 每日计划头部 */
