@@ -2,10 +2,13 @@ import React, { useState } from 'react';
 import './TravelGuideDisplay.css';
 
 const TravelGuideDisplay = ({ initialGuide, onSave, onCancel }) => {
+  console.info(initialGuide.travels)
   const [guide, setGuide] = useState(initialGuide || {
     title: '',
-    attractions: '',
-    itinerary: [
+    about: '',
+    startTime:'',
+    endTime:'',
+    travels: [
       { day: 1, activities: '' }
     ]
   });
@@ -20,30 +23,30 @@ const TravelGuideDisplay = ({ initialGuide, onSave, onCancel }) => {
   const handleAttractionsChange = (e) => {
     setGuide(prev => ({
       ...prev,
-      attractions: e.target.value
+      about: e.target.value
     }));
   };
 
-  const handleItineraryChange = (dayIndex, e) => {
-    const newItinerary = [...guide.itinerary];
-    newItinerary[dayIndex] = {
-      ...newItinerary[dayIndex],
+  const handleTravelsChange = (dayIndex, e) => {
+    const newTravels = [...travels];
+    newTravels[dayIndex] = {
+      ...newTravels[dayIndex],
       activities: e.target.value
     };
     
     setGuide(prev => ({
       ...prev,
-      itinerary: newItinerary
+      travels: newTravels
     }));
   };
 
   const addDay = () => {
     setGuide(prev => ({
       ...prev,
-      itinerary: [
-        ...prev.itinerary,
+      travels: [
+        ...prev.travels,
         { 
-          day: prev.itinerary.length + 1, 
+          day: prev.travels.length + 1, 
           activities: '' 
         }
       ]
@@ -53,7 +56,7 @@ const TravelGuideDisplay = ({ initialGuide, onSave, onCancel }) => {
   const removeDay = (dayIndex) => {
     setGuide(prev => ({
       ...prev,
-      itinerary: prev.itinerary.filter((_, index) => index !== dayIndex)
+      travels: prev.travels.filter((_, index) => index !== dayIndex)
     }));
   };
 
@@ -69,60 +72,51 @@ const TravelGuideDisplay = ({ initialGuide, onSave, onCancel }) => {
       </div>
       <div className="travel-guide-content">
         <div className="attractions-section">
-          <h3>Attractions</h3>
+          <h3>About</h3>
           <textarea 
-            value={guide.attractions} 
+            style={{height: '10px'}}
+            value={guide.about} 
             onChange={handleAttractionsChange}
             className="attractions-textarea"
-            placeholder="Describe interesting attractions in the area..."
+            placeholder="Describe interesting about in the area..."
           />
         </div>
 
         <div className="itinerary-section">
-          <h3>Itinerary</h3>
-          {guide.itinerary.map((dayPlan, index) => (
+          <h3>Travels</h3>
+          {Array.isArray(guide.travels) && guide.travels.map((dayPlan, index) => (
             <div key={index} className="day-plan">
               <div className="day-header">
                 <h4>Day {dayPlan.day}</h4>
-                {guide.itinerary.length > 1 && (
-                  <button 
-                    onClick={() => removeDay(index)}
-                    className="remove-day-btn"
-                  >
+                {guide.travels.length > 1 && (
+                  <button onClick={() => removeDay(index)} className="remove-day-btn">
                     Remove
                   </button>
                 )}
               </div>
               <textarea
                 value={dayPlan.activities}
-                onChange={(e) => handleItineraryChange(index, e)}
+                onChange={(e) => handleTravelsChange(index, e)}
                 className="day-activities-textarea"
                 placeholder={`Describe activities for Day ${dayPlan.day}...`}
               />
             </div>
           ))}
           
-          <button 
-            onClick={addDay}
-            className="add-day-btn"
-          >
-            + Add
+          <button onClick={addDay}className="add-day-btn">
+            + Add Day
           </button>
         </div>
 
         <div className="guide-actions">
-          <button 
-            onClick={() => onSave(guide)}
-            className="save-btn"
-          >
+
+          <button onClick={() => onSave(guide)} className="save-btn">
             Save Guide
           </button>
-          <button 
-            onClick={onCancel}
-            className="cancel-btn"
-          >
+          <button onClick={onCancel} className="cancel-btn">
             Cancel
           </button>
+          
         </div>
       </div>
     </div>

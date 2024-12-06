@@ -2,6 +2,7 @@ import SquarePage from './Page/SquarePage';
 import PersonalPage from './Page/PersonalPage';
 import { LanguageProvider, useLanguage } from './Component/LanguageContext';
 import Logo from '../../assets/logo.svg';
+import { BiSolidHomeAlt2, BiSolidUser } from "react-icons/bi";
 import './App.css';
 
 // Logo Component
@@ -50,13 +51,13 @@ const App = () => {
           className={`nav-button ${activePage === 'square' ? 'active' : ''}`}
           onClick={() => setActivePage('square')}
         >
-          {t('square')}
+          <BiSolidHomeAlt2/>
         </button>
         <button 
           className={`nav-button ${activePage === 'personal' ? 'active' : ''}`}
           onClick={() => setActivePage('personal')}
         >
-          {t('personal')}
+          <BiSolidUser/>
         </button>
       </div>
     </div>
