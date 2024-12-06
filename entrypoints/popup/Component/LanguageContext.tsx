@@ -24,7 +24,7 @@ const translations = {
     destination: 'Destination',
     startDate: 'Start Date',
     endDate: 'End Date',
-    generateGuide: 'AI Generate Guide',
+    generateGuide: 'AIGenGuide',
     confirm: 'Confirm',
     cancel: 'Cancel',
     search: 'Search',

@@ -69,7 +69,8 @@ body {
   .nav-button {
     background: none;
     border: none;
-    padding: 10px 20px;
+    padding: 5px;
+    font-size: x-large;
   }
   
   .nav-button.active {
@@ -207,7 +208,7 @@ body {
     color: white;
   }
 
-.progress-bar {
+  .progress-bar {
     height: 5px;
     background-color: #4CAF50;
     transition: width 0.5s ease;
@@ -249,4 +250,45 @@ body {
     border: 1px solid #e0e0e0;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0.2, 0.4, 0.6);
+  }
+  .calendar-button{
+    padding: 0px, 10px;
+    font-size: x-large;
+    background-color: #fff;
+    border: none;
+  }
+  .edit-plan-button{
+    padding: 5px 8px;
+    font-size: 25px;
+    border: none;
+    background-color: #fff;
+  }
+
+
+  .ai-select-container {
+    position: relative;
+    display: inline-block;
+    width: 110px;
+  }
+
+  .ai-select-container select {
+    width: 100%;
+    padding: 8px 12px;
+    font-size: 13px;
+    color: #333;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    appearance: none;
+    background: transparent;
+    cursor: pointer;
+  }
+
+  .ai-select-container::after {
+    content: '▼'; /* 下拉箭头 */
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #333;
+    pointer-events: none;
   }

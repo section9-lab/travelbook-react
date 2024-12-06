@@ -6,10 +6,10 @@ function SelectorAI() {
 
   // 定义选项数组
   const options = [
-    { value: 'option1', label: 'OpenAI' },
-    { value: 'option2', label: 'Kimi' },
-    { value: 'option3', label: 'Hunyuan' },
-    { value: 'option3', label: 'Llma3.1' },
+    { value: 'hunyuan', label: 'Hunyuan' },
+    { value: 'openai', label: 'OpenAI' },
+    { value: 'kimi', label: 'Kimi' },
+    { value: 'llama', label: 'Llama3.1' },
     // 可以继续添加更多选项
   ];
 
@@ -19,12 +19,11 @@ function SelectorAI() {
   };
 
   return (
-    <div>
+    <div className='ai-select-container'>
       <select
-        id="dropdownSelector"
+        id="ai-selector"
         value={selectedValue}
-        onChange={handleChange}
-      >
+        onChange={handleChange}>
         {options.map((option) => (
           <option key={option.value} value={option.value}>
             {option.label}

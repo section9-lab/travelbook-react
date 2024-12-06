@@ -3,6 +3,7 @@ import { useLanguage } from './LanguageContext';
 import DateTimeRangePicker from './DateTimeRangePicker';
 import TravelGuideDisplay from './TravelGuideDisplay';
 import SelectorAI from './SelectorAI';
+import { BiCalendar } from "react-icons/bi";
 import axios from 'axios';
 
 
@@ -22,7 +23,7 @@ const AddTravelPlanModal = ({ isOpen, onClose, onSubmit }) => {
     setEndTime(end);
   };
 
-  const travelPlan = {
+  const aiGentravelPlan = {
     startTime,
     endTime,
     source,
@@ -37,11 +38,14 @@ const AddTravelPlanModal = ({ isOpen, onClose, onSubmit }) => {
 
       // 根据实际需求构造响应数据
       const mockGuideData = response.data.data ? {
+        id: `${crypto.randomUUID()}`,
         title: `Travel Guide: ${source} to ${destination}`,
-        attractions: 'Explore the beautiful landscapes and local culture.',
-        itinerary: Array.from({ length: Math.ceil((new Date(endTime) - new Date(startTime)) / (1000 * 60 * 60 * 24)) }, (_, i) => ({
+        startTime: `${startTime}`,
+        endTime: `${endTime}`,
+        about: 'Explore the beautiful landscapes and local culture.',
+        travels: Array.from({ length: Math.ceil((new Date(endTime) - new Date(startTime)) / (1000 * 60 * 60 * 24)) }, (_, i) => ({
           day: Math.floor(i/2),
-          activities: `Day ${i + 1} activities based on user ${response.data.data[0].first_name}'s recommendations...`
+          travels: `Day ${Math.floor(i/2)}} activities based on user ${response.data.data[0].first_name}'s recommendations...`
         }))
       } : null;
       console.info(mockGuideData)
@@ -70,7 +74,6 @@ const AddTravelPlanModal = ({ isOpen, onClose, onSubmit }) => {
     <div className="modal-overlay">
       <div className="modal-content">
         <h2>{t('addTravelPlan')}</h2>
-        
         <label>{t('travelDateRange')}</label>
         <div className="date-input-container">
           <input 
@@ -84,7 +87,7 @@ const AddTravelPlanModal = ({ isOpen, onClose, onSubmit }) => {
             style={{ width: '75%', gap: '4px'}} 
           />
           <button className="calendar-button"onClick={() => setIsDatePickerOpen(true)}>
-            📅
+            <BiCalendar/>
           </button>
         </div>
         

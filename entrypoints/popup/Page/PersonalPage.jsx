@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { useLanguage } from '../Component/LanguageContext';
 import AddTravelPlanModal from '../Component/AddTravelPlanModal';
 import TravelGuideDisplay from '../Component/TravelGuideDisplay';
+import { BiEdit,BiShare } from "react-icons/bi";
+
 
 const PersonalPage = () => {
   const { t } = useLanguage();
@@ -12,14 +14,13 @@ const PersonalPage = () => {
       destination: "日本东京", 
       startTime: "2024-07-15T10:00", 
       endTime: "2024-07-22T20:00",
-      guide: {
-        title: "Beijing to Tokyo Travel Guide",
-        attractions: "Explore the rich cultural heritage of both cities.",
-        itinerary: [
-          { day: 1, activities: "Arrive in Tokyo, check-in to hotel" },
-          { day: 2, activities: "Visit Tokyo Tower and explore Shinjuku" }
-        ]
-      }
+      totalTime: "5天6夜",
+      title: "Beijing to Tokyo Travel Guide",
+      about: "Tokyo is a beautiful city in Japan.",
+      travels: [
+        { day: 1, activities: "Arrive in Tokyo, check-in to hotel" },
+        { day: 2, activities: "Visit Tokyo Tower and explore Shinjuku" }
+      ]
     }
   ]);
 
@@ -47,10 +48,10 @@ const PersonalPage = () => {
   if (editingPlan) {
     return (
       <TravelGuideDisplay 
-        initialGuide={editingPlan.guide || {
-          title: `${editingPlan.source} to ${editingPlan.destination} Travel Guide`,
-          attractions: '',
-          itinerary: []
+        initialGuide={editingPlan || {
+          title: `${editingPlan.title}`,
+          about: `${editingPlan.about}`,
+          travels: `${editingPlan.travels}`
         }}
         onSave={(updatedGuide) => {
           handleEditPlan({ guide: updatedGuide });
@@ -70,21 +71,24 @@ const PersonalPage = () => {
               
               <div>
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                <h3>{plan.source} {'='} {plan.destination}</h3>
+                <h4>{plan.title}</h4>
                 <button 
                   className="edit-plan-button" 
                   onClick={() => startEditPlan(plan)}>
-                  ✏️
+                  <BiEdit />
                 </button>
               </div>
-
-                <p>
-                  {new Date(plan.startTime).toLocaleString()} 
-                  {' - '} 
-                  {new Date(plan.endTime).toLocaleString()}
-                </p>
-              </div>
-
+              <span>{plan.about}</span>
+              <p style={{ display: 'flex', fontSize: 'x-small'}}>
+                {new Date(plan.startTime).toLocaleString()} 
+                {' -- '} 
+                {new Date(plan.endTime).toLocaleString()}
+                <button style={{ marginLeft: '25%', fontSize: 'x-large',
+                  backgroundColor: '#fff',border: 'none'}}>
+                  <BiShare/>
+                </button>
+              </p>
+            </div>
           </div>
          </div>
         ))}
