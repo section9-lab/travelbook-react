@@ -32,25 +32,38 @@ const AddTravelPlanModal = ({ isOpen, onClose, onSubmit }) => {
 
   const handleSubmit = async () => {
     try {
-      // 模拟API调用
-      const response = await axios.get('https://reqres.in/api/users?page=2');
-      // const response = await axios.post('http://127.0.0.1:5000/travel_plans',travelPlan);
+      // handleChange()
+      // const response = await axios.get('https://reqres.in/api/users?page=2');
+      console.info(aiGentravelPlan)
+      const response = await axios.post('https://travelbook-kappa.vercel.app/gen_travel_plans',aiGentravelPlan,{
+      // const response = await axios.post('http://localhost:5000/gen_travel_plans',aiGentravelPlan,{
+        headers: {
+          'Access-Control-Allow-Origin': 'travelbook',
+          'Content-Type': 'application/json',
+        },
+      });
+      const travelData = response.data
+      console.info(travelData)
+      // 构造假的响应数据
+      // const mockGuideData = response.data.data ? {
+      //   id: `${crypto.randomUUID()}`,
+      //   title: `Travel Guide: ${source} to ${destination}`,
+      //   startTime: `${startTime}`,
+      //   endTime: `${endTime}`,
+      //   about: 'Explore the beautiful landscapes and local culture.',
+      //   travels: Array.from({ length: Math.ceil((new Date(endTime) - new Date(startTime)) / (1000 * 60 * 60 * 24)) }, (_, i) => ({
+      //     day: Math.floor(i/2),
+      //     travels: `Day ${Math.floor(i/2)}} activities based on user ${response.data.data[0].first_name}'s recommendations...`
+      //   }))
+      // } : null;
+      // console.info(mockGuideData)
+      // {
+      //   "day": 0,
+      //   "travels": "Day 0} activities based on user Michael's recommendations..."
+      // }
+      // setApiResponse(mockGuideData);
 
-      // 根据实际需求构造响应数据
-      const mockGuideData = response.data.data ? {
-        id: `${crypto.randomUUID()}`,
-        title: `Travel Guide: ${source} to ${destination}`,
-        startTime: `${startTime}`,
-        endTime: `${endTime}`,
-        about: 'Explore the beautiful landscapes and local culture.',
-        travels: Array.from({ length: Math.ceil((new Date(endTime) - new Date(startTime)) / (1000 * 60 * 60 * 24)) }, (_, i) => ({
-          day: Math.floor(i/2),
-          travels: `Day ${Math.floor(i/2)}} activities based on user ${response.data.data[0].first_name}'s recommendations...`
-        }))
-      } : null;
-      console.info(mockGuideData)
-
-      setApiResponse(mockGuideData);
+      setApiResponse(travelData)
     } catch (error) {
       alert('Network Error');
       console.error('Error generating guide:', error);
@@ -66,6 +79,23 @@ const AddTravelPlanModal = ({ isOpen, onClose, onSubmit }) => {
 
   const handleGuideCancel = () => {
     setApiResponse(null);
+  };
+
+  const options = [
+    { value: 'gemini', label: 'Gemini' },
+    { value: 'llama', label: 'Llama3' },
+    { value: 'openai', label: 'OpenAI' },
+    { value: 'hunyuan', label: 'HunYuan' },
+    { value: 'kimi', label: 'Kimi' },
+    { value: 'qwq', label: 'Qwq' },
+    // 可以继续添加更多选项
+  ];
+  const handleChange = (event) => {
+    const selectedValue = event.target.value;
+    console.info("select:", selectedValue);
+
+    // 如果 selectedValue 为空，使用默认值
+    aiGentravelPlan.model = selectedValue || "gemini";
   };
 
   if (!isOpen) return null;
@@ -135,7 +165,17 @@ const AddTravelPlanModal = ({ isOpen, onClose, onSubmit }) => {
         </div>
 
         <div className="modal-actions">
-          <SelectorAI/>
+          <div className='ai-select-container'>
+            <select
+              id="ai-selector"
+              onChange={handleChange} defaultValue="gemini">
+              {options.map((option) => (
+                <option key={option.value} value={option.value}>
+                  {option.label}
+                </option>
+              ))}
+            </select>
+          </div>
           <button onClick={handleSubmit}>{t('generateGuide')}</button>
           <button onClick={onClose}>{t('cancel')}</button>
         </div>

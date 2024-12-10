@@ -3,6 +3,8 @@ import { useLanguage } from '../Component/LanguageContext';
 import AddTravelPlanModal from '../Component/AddTravelPlanModal';
 import TravelGuideDisplay from '../Component/TravelGuideDisplay';
 import { BiEdit,BiShare } from "react-icons/bi";
+import axios from 'axios';
+import FingerprintJS from '@fingerprintjs/fingerprintjs';
 
 
 const PersonalPage = () => {
@@ -14,7 +16,6 @@ const PersonalPage = () => {
       destination: "日本东京", 
       startTime: "2024-07-15T10:00", 
       endTime: "2024-07-22T20:00",
-      totalTime: "5天6夜",
       title: "Beijing to Tokyo Travel Guide",
       about: "Tokyo is a beautiful city in Japan.",
       travels: [
@@ -27,7 +28,31 @@ const PersonalPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingPlan, setEditingPlan] = useState(null);
 
-  const handleAddPlan = (newPlan) => {
+  const handleAddPlan = async(newPlan) => {
+
+    // 保存到服务器
+    try{
+        // 等待 FingerprintJS 加载并获取设备指纹
+        const fp = await FingerprintJS.load();
+        const result = await fp.get();
+        const duid = result.visitorId; // 获取设备指纹
+        console.info(duid);
+        console.info('==save==')
+        newPlan.userId = duid
+        console.info(newPlan)
+        
+        const response = axios.post('https://travelbook-kappa.vercel.app/add_travel_plans',newPlan,{
+        // const response = axios.post('http://localhost:5000/add_travel_plans',newPlan,{
+          headers: {
+            'Access-Control-Allow-Origin': 'travelbook',
+            'Content-Type': 'application/json',
+          }
+        });
+        console.info(response.result)
+      }catch (error) {
+        alert('Network Error Save Local');
+        console.error('Error generating guide:', error);
+      }
     setPlans([...plans, { ...newPlan, id: plans.length + 1 }]);
   };
 
@@ -54,6 +79,21 @@ const PersonalPage = () => {
           travels: `${editingPlan.travels}`
         }}
         onSave={(updatedGuide) => {
+          // // 保存到服务器
+          // try{
+          //   console.info('==save==')
+          //   console.info(updatedGuide)
+          //   const response = axios.post('http://localhost:5000/add_travel_plans',updatedGuide,{
+          //     headers: {
+          //       'Access-Control-Allow-Origin': 'travelbook',
+          //       'Content-Type': 'application/json',
+          //     }
+          //   });
+          //   console.info(response)
+          // }catch (error) {
+          //   alert('Network Error Save Local');
+          //   console.error('Error generating guide:', error);
+          // }
           handleEditPlan({ guide: updatedGuide });
         }}
         onCancel={() => setEditingPlan(null)}
@@ -79,7 +119,7 @@ const PersonalPage = () => {
                 </button>
               </div>
               <span>{plan.about}</span>
-              <p style={{ display: 'flex', fontSize: 'x-small'}}>
+              <p style={{ display: 'flex', maxHeight:'50px',fontSize: 'x-small'}}>
                 {new Date(plan.startTime).toLocaleString()} 
                 {' -- '} 
                 {new Date(plan.endTime).toLocaleString()}
