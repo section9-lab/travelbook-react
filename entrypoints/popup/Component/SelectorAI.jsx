@@ -1,29 +1,29 @@
 import React, { useState } from 'react';
 
-function SelectorAI() {
-  // 定义状态来存储选中的值
-  const [selectedValue, setSelectedValue] = useState('');
+function SelectorAI(selectChange) {
 
   // 定义选项数组
   const options = [
-    { value: 'hunyuan', label: 'Hunyuan' },
+    { value: 'gemini', label: 'Gemini' },
+    { value: 'llama', label: 'Llama3' },
     { value: 'openai', label: 'OpenAI' },
+    { value: 'hunyuan', label: 'HunYuan' },
     { value: 'kimi', label: 'Kimi' },
-    { value: 'llama', label: 'Llama3.1' },
+    { value: 'qwq', label: 'Qwq' },
     // 可以继续添加更多选项
   ];
 
   // 处理选择变化的函数
   const handleChange = (event) => {
-    setSelectedValue(event.target.value);
+    const selectedValue = event.target.value;
+    onSelect(selectedValue);
   };
 
   return (
     <div className='ai-select-container'>
       <select
         id="ai-selector"
-        value={selectedValue}
-        onChange={handleChange}>
+        onChange={selectChange}>
         {options.map((option) => (
           <option key={option.value} value={option.value}>
             {option.label}

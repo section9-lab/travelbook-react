@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import './TravelGuideDisplay.css';
 
 const TravelGuideDisplay = ({ initialGuide, onSave, onCancel }) => {
-  console.info(initialGuide.travels)
   const [guide, setGuide] = useState(initialGuide || {
     title: '',
     about: '',
@@ -28,10 +27,13 @@ const TravelGuideDisplay = ({ initialGuide, onSave, onCancel }) => {
   };
 
   const handleTravelsChange = (dayIndex, e) => {
-    const newTravels = [...travels];
+    const newTravels = [...guide.travels];
+
+    console.info('====')
+    console.info(newTravels)
     newTravels[dayIndex] = {
       ...newTravels[dayIndex],
-      activities: e.target.value
+      travel: e.target.value
     };
     
     setGuide(prev => ({
@@ -47,7 +49,7 @@ const TravelGuideDisplay = ({ initialGuide, onSave, onCancel }) => {
         ...prev.travels,
         { 
           day: prev.travels.length + 1, 
-          activities: '' 
+          travel: '' 
         }
       ]
     }));
@@ -74,7 +76,7 @@ const TravelGuideDisplay = ({ initialGuide, onSave, onCancel }) => {
         <div className="attractions-section">
           <h3>About</h3>
           <textarea 
-            style={{height: '10px'}}
+            style={{height: '65px'}}
             value={guide.about} 
             onChange={handleAttractionsChange}
             className="attractions-textarea"
@@ -95,7 +97,7 @@ const TravelGuideDisplay = ({ initialGuide, onSave, onCancel }) => {
                 )}
               </div>
               <textarea
-                value={dayPlan.activities}
+                value={dayPlan.travel}
                 onChange={(e) => handleTravelsChange(index, e)}
                 className="day-activities-textarea"
                 placeholder={`Describe activities for Day ${dayPlan.day}...`}
