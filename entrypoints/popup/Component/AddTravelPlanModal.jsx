@@ -33,7 +33,6 @@ const AddTravelPlanModal = ({ isOpen, onClose, onSubmit }) => {
   const handleSubmit = async () => {
     try {
       // handleChange()
-      // const response = await axios.get('https://reqres.in/api/users?page=2');
       console.info(aiGentravelPlan)
       const response = await axios.post('https://travelbook-kappa.vercel.app/gen_travel_plans',aiGentravelPlan,{
       // const response = await axios.post('http://localhost:5000/gen_travel_plans',aiGentravelPlan,{
