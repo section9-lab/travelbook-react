@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { useLanguage } from '../Component/LanguageContext';
 import AddTravelPlanModal from '../Component/AddTravelPlanModal';
 import TravelGuideDisplay from '../Component/TravelGuideDisplay';
@@ -9,35 +9,18 @@ import FingerprintJS from '@fingerprintjs/fingerprintjs';
 
 const PersonalPage = () => {
   const { t } = useLanguage();
-  const [plans, setPlans] = useState([
-    { 
-      id: 1, 
-      source: "北京",
-      destination: "日本东京", 
-      startTime: "2024-07-15T10:00", 
-      endTime: "2024-07-22T20:00",
-      title: "Beijing to Tokyo Travel Guide",
-      about: "Tokyo is a beautiful city in Japan.",
-      travels: [
-        { day: 1, activities: "Arrive in Tokyo, check-in to hotel" },
-        { day: 2, activities: "Visit Tokyo Tower and explore Shinjuku" }
-      ]
-    }
-  ]);
-
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingPlan, setEditingPlan] = useState(null);
+  const [plans, setPlans] = useState([]);
 
   const handleAddPlan = async(newPlan) => {
-
     // 保存到服务器
     try{
         // 等待 FingerprintJS 加载并获取设备指纹
         const fp = await FingerprintJS.load();
         const result = await fp.get();
         const duid = result.visitorId; // 获取设备指纹
-        console.info(duid);
-        console.info('==save==')
+        console.info('==add_travel_plans==')
         newPlan.userId = duid
         console.info(newPlan)
         
@@ -53,8 +36,42 @@ const PersonalPage = () => {
         alert('Network Error Save Local');
         console.error('Error generating guide:', error);
       }
+      // setPlans(prevPlans => [...prevPlans, { ...newPlan, id: prevPlans.length + 1 }]);
+
     setPlans([...plans, { ...newPlan, id: plans.length + 1 }]);
   };
+
+
+
+  useEffect(() => {
+    if (plans.length > 0) {
+      console.info("Plans already exist, skipping fetch.");
+      return; // 如果有数据，不发起请求
+    }
+    const fetchPlans = async () => {
+      try {
+        const fp = await FingerprintJS.load();
+        const result = await fp.get();
+        const duid = result.visitorId; // 获取设备指纹
+        console.info('==travel_plans_list==')
+        console.info(duid);
+        const response = await axios.get("https://travelbook-kappa.vercel.app/travel_plans_list",{
+        // const response = await axios.get("http://localhost:5000/travel_plans_list",{
+          params: { user_id: duid },
+        });
+        if (response.data && Array.isArray(response.data.data)) {
+          console.info(response.data.data)
+          setPlans(response.data.data);
+        } else {
+          console.error("Fetched plans is not an array:", response.data);
+        }
+      } catch (error) {
+        console.error("Error fetching plans:", error);
+      }
+    };
+  
+    fetchPlans();
+  }, []);
 
   const handleEditPlan = (updatedPlan) => {
     setPlans(plans.map(plan => 
@@ -105,7 +122,8 @@ const PersonalPage = () => {
     <div className="personal-center">
       <h2>{t('personalCenter')}</h2>
       <div className="travel-plans">
-        {plans.map(plan => (
+      {Array.isArray(plans) && plans.length > 0 ? (
+        plans.map(plan => (
           <div key={plan.id} className="travel-plan-card">
             <div className="travel-plan-header">
               
@@ -121,7 +139,7 @@ const PersonalPage = () => {
               <span>{plan.about}</span>
               <p style={{ display: 'flex', maxHeight:'50px',fontSize: 'x-small'}}>
                 {new Date(plan.startTime).toLocaleString()} 
-                {' -- '} 
+                {' --> '} 
                 {new Date(plan.endTime).toLocaleString()}
                 <button style={{ marginLeft: '25%', fontSize: 'x-large',
                   backgroundColor: '#fff',border: 'none'}}>
@@ -131,7 +149,9 @@ const PersonalPage = () => {
             </div>
           </div>
          </div>
-        ))}
+        ))) : (
+          <p>No travel plans available.</p>
+        )}
       </div>
 
       <button 
