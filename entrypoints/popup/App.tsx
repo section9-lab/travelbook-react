@@ -67,9 +67,11 @@ const App = () => {
 // Wrap App with LanguageProvider
 const AppWrapper = () => {
   return (
-    <LanguageProvider>
-      <App />
-    </LanguageProvider>
+    <>
+      <LanguageProvider>
+        <App />
+      </LanguageProvider>
+    </>
   );
 };
 

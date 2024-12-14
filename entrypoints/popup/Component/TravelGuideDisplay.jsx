@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './TravelGuideDisplay.css';
 
 const TravelGuideDisplay = ({ initialGuide, onSave, onCancel }) => {
+  console.info(initialGuide)
   const [guide, setGuide] = useState(initialGuide || {
     title: '',
     about: '',

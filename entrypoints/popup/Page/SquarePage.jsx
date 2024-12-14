@@ -1,4 +1,7 @@
 import React, { useState } from 'react';
+import { BsFillHeartFill } from "react-icons/bs";
+import HeartButton from '../Component/HeartButton';
+
 
 // 模拟生成图片URL的函数
 const generatePlaceholderImage = (destination) => {
@@ -34,6 +37,8 @@ const SearchBar = ({ onSearch }) => {
   );
 };
 
+const hot = 12
+
 // 旅行指南卡片组件
 const TravelGuideCard = ({ title, destination, rating, image }) => (
   <div className="travel-guide-card">
@@ -50,7 +55,7 @@ const TravelGuideCard = ({ title, destination, rating, image }) => (
     />
     <h3>{title}</h3>
     <p>目的地：{destination}</p>
-    <p>热度：{rating}/5</p>
+    <HeartButton initialCount={hot}/>
   </div>
 );
 
@@ -85,48 +90,6 @@ const SquarePage = () => {
       destination: "特罗姆瑟", 
       rating: 4.6,
       image: generatePlaceholderImage("Tromso")
-    },
-    {
-      id: 5, 
-      title: "马尔代夫蜜月之旅", 
-      destination: "马尔代夫", 
-      rating: 4.5,
-      image: generatePlaceholderImage("Maldives")
-    },
-    {
-      id: 6, 
-      title: "澳大利亚大堡礁之旅", 
-      destination: "凯恩斯", 
-      rating: 4.7,
-      image: generatePlaceholderImage("Cairns")
-    },
-    {
-      id: 7, 
-      title: "秘鲁因加文明探索", 
-      destination: "马丘比丘", 
-      rating: 4.8,
-      image: generatePlaceholderImage("MachuPicchu")
-    },
-    {
-      id: 8, 
-      title: "俄罗斯风情之旅", 
-      destination: "圣彼得堡", 
-      rating: 4.6,
-      image: generatePlaceholderImage("StPetersburg")
-    },
-    {
-      id: 9, 
-      title: "摩洛哥撒哈拉沙漠冒险", 
-      destination: "撒哈拉沙漠", 
-      rating: 4.7,
-      image: generatePlaceholderImage("Sahara")
-    },
-    {
-      id: 10, 
-      title: "新西兰中土世界之旅", 
-      destination: "惠灵顿", 
-      rating: 4.9,
-      image: generatePlaceholderImage("Wellington")
     }
   ]);
 

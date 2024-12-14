@@ -59,6 +59,13 @@ const PersonalPage = () => {
         // const response = await axios.get("http://localhost:5000/travel_plans_list",{
           params: { user_id: duid },
         });
+        // 获取状态码
+        const statusCode = response.status;
+
+        // 判断状态码
+        if (statusCode >= 200 && statusCode < 300) {
+          console.log('成功响应 (2xx):', response.data);
+        } 
         if (response.data && Array.isArray(response.data.data)) {
           console.info(response.data.data)
           setPlans(response.data.data);
@@ -66,7 +73,21 @@ const PersonalPage = () => {
           console.error("Fetched plans is not an array:", response.data);
         }
       } catch (error) {
-        console.error("Error fetching plans:", error);
+        // 判断是否为响应错误
+        if (error.response) {
+          const statusCode = error.response.status;
+
+          if (statusCode >= 400 && statusCode < 500) {
+            console.log('客户端错误 (4xx):', statusCode);
+          } else if (statusCode >= 500) {
+            console.log('服务器错误 (5xx):', statusCode);
+          } else {
+            console.log('其他错误状态:', statusCode);
+          }
+        } else {
+          // 未收到响应或其他错误
+          console.error('请求失败，可能是网络错误或其他原因:', error.message);
+        }
       }
     };
   
@@ -96,21 +117,6 @@ const PersonalPage = () => {
           travels: `${editingPlan.travels}`
         }}
         onSave={(updatedGuide) => {
-          // // 保存到服务器
-          // try{
-          //   console.info('==save==')
-          //   console.info(updatedGuide)
-          //   const response = axios.post('http://localhost:5000/add_travel_plans',updatedGuide,{
-          //     headers: {
-          //       'Access-Control-Allow-Origin': 'travelbook',
-          //       'Content-Type': 'application/json',
-          //     }
-          //   });
-          //   console.info(response)
-          // }catch (error) {
-          //   alert('Network Error Save Local');
-          //   console.error('Error generating guide:', error);
-          // }
           handleEditPlan({ guide: updatedGuide });
         }}
         onCancel={() => setEditingPlan(null)}
@@ -126,26 +132,24 @@ const PersonalPage = () => {
         plans.map(plan => (
           <div key={plan.id} className="travel-plan-card">
             <div className="travel-plan-header">
-              
-              <div>
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                <h4>{plan.title}</h4>
-                <button 
-                  className="edit-plan-button" 
-                  onClick={() => startEditPlan(plan)}>
-                  <BiEdit />
-                </button>
-              </div>
-              <span>{plan.about}</span>
+              <h4>title:{plan.title}</h4>
+              <img src={plan.img_url} className="guide-image"
+                  style={{ width: '100%', height: '200px', objectFit: 'cover', borderRadius: '10px' }}
+                />
               <p style={{ display: 'flex', maxHeight:'50px',fontSize: 'x-small'}}>
                 {new Date(plan.startTime).toLocaleString()} 
                 {' --> '} 
                 {new Date(plan.endTime).toLocaleString()}
-                <button style={{ marginLeft: '25%', fontSize: 'x-large',
-                  backgroundColor: '#fff',border: 'none'}}>
-                  <BiShare/>
-                </button>
               </p>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+              <button style={{ fontSize: 'x-large',backgroundColor: '#fff',border: 'none',padding: '1px 40px'}}>
+                <BiShare/>
+              </button>
+              <button style={{ fontSize: 'x-large',backgroundColor: '#fff',border: 'none',padding: '1px 40px'}}
+                className="edit-plan-button" 
+                onClick={() => startEditPlan(plan)}>
+                <BiEdit />
+              </button>
             </div>
           </div>
          </div>
