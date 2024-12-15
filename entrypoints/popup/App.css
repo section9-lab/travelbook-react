@@ -186,7 +186,7 @@ body {
   }
   
   .modal-actions button {
-    padding: 5px 10px;
+    padding: 5px 8px;
     border: none;
     border-radius: 5px;
   }
@@ -203,7 +203,7 @@ body {
 
   
   .modal-actions button:last-child {
-    margin-left: 35%; /* 左侧距离 */
+    margin-left: 10px; 
     background-color: #f44336;
     color: white;
   }

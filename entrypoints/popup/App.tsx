@@ -1,9 +1,9 @@
-import SquarePage from './Page/SquarePage';
-import PersonalPage from './Page/PersonalPage';
-import { LanguageProvider, useLanguage } from './Component/LanguageContext';
-import Logo from '../../assets/logo.svg';
+import Home from "./Page/Home";
+import Personal from "./Page/Personal";
+import { LanguageProvider, useLanguage } from "./Component/LanguageContext";
+import Logo from "../../assets/logo3.png";
 import { BiSolidHomeAlt2, BiSolidUser } from "react-icons/bi";
-import './App.css';
+import "./App.css";
 
 // Logo Component
 const AppLogo = () => {
@@ -11,10 +11,8 @@ const AppLogo = () => {
 
   return (
     <div className="app-logo">
-      <img src={Logo} height="25" width="25" alt="Logo" />
-        <span>
-          {language === 'zh' ? ' 路书' : ' TravelBook'}
-        </span>
+      <img src={Logo} height="40" width="40" alt="Logo" />
+      <span>{language === "zh" ? " 路书" : " TravelBook"}</span>
     </div>
   );
 };
@@ -25,14 +23,14 @@ const LanguageToggle = () => {
 
   return (
     <button className="language-toggle" onClick={toggleLanguage}>
-      {language === 'zh' ? 'EN' : '中'}
+      {language === "zh" ? "EN" : "中"}
     </button>
   );
 };
 
 // Main App Component
 const App = () => {
-  const [activePage, setActivePage] = useState('square');
+  const [activePage, setActivePage] = useState("square");
   const { t } = useLanguage();
 
   return (
@@ -43,21 +41,21 @@ const App = () => {
       </div>
 
       <div className="app-content">
-        {activePage === 'square' ? <SquarePage /> : <PersonalPage />}
+        {activePage === "square" ? <Home /> : <Personal />}
       </div>
 
       <div className="app-footer">
-        <button 
-          className={`nav-button ${activePage === 'square' ? 'active' : ''}`}
-          onClick={() => setActivePage('square')}
+        <button
+          className={`nav-button ${activePage === "square" ? "active" : ""}`}
+          onClick={() => setActivePage("square")}
         >
-          <BiSolidHomeAlt2/>
+          <BiSolidHomeAlt2 />
         </button>
-        <button 
-          className={`nav-button ${activePage === 'personal' ? 'active' : ''}`}
-          onClick={() => setActivePage('personal')}
+        <button
+          className={`nav-button ${activePage === "personal" ? "active" : ""}`}
+          onClick={() => setActivePage("personal")}
         >
-          <BiSolidUser/>
+          <BiSolidUser />
         </button>
       </div>
     </div>
