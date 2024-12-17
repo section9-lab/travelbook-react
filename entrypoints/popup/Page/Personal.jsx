@@ -34,6 +34,7 @@ const PersonalPage = () => {
 
   useEffect(() => {
     console.info("useEffect");
+    console.info(plans)
     if (plans && plans.length > 0) {
       console.info("Plans already exist, skipping fetch.");
       return; // 如果有数据，不发起请求
@@ -129,10 +130,10 @@ const PersonalPage = () => {
                   src={plan.img_url}
                   className="guide-image"
                   style={{
-                    width: "100%",
-                    height: "200px",
+                    width: "85%",
+                    height: "100px",
                     objectFit: "cover",
-                    borderRadius: "10px",
+                    borderRadius: "15px",
                   }}
                 />
                 <p

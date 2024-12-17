@@ -10,6 +10,12 @@ export const get_home = () => {
   return axios.get(`${API_BASE_URL}/home`);
 };
 
+export const home_search = (dest) => {
+  return axios.get(`${API_BASE_URL}/home_search`, {
+    params: { destination: dest },
+  });
+};
+
 export const update_hot = (travel_id) => {
   return axios.get(`${API_BASE_URL}/update_hot`, {
     params: { id: travel_id },
@@ -23,10 +29,10 @@ export const travel_plans_list = (duid) => {
 };
 
 export const public_travel = (travel_id) => {
-    return axios.get(`${API_BASE_URL}/public_travel`, {
-      params: { id: travel_id },
-    });
-  };
+  return axios.get(`${API_BASE_URL}/public_travel`, {
+    params: { id: travel_id },
+  });
+};
 
 export const add_travel_plans = (newPlan) => {
   return axios.post(`${API_BASE_URL}/add_travel_plans`, newPlan, {

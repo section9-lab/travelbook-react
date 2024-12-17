@@ -72,6 +72,15 @@ const TravelGuideDisplay = ({ initialGuide, onSave, onCancel }) => {
           className="travel-guide-title"
         />
       </div>
+      <img 
+      src={guide.img_url}
+      style={{
+        width: "90%",
+        height: "100px",
+        objectFit: "cover",
+        borderRadius: "15px",
+      }}
+      />
       <div className="travel-guide-content">
         <div className="attractions-section">
           <h3>About</h3>
