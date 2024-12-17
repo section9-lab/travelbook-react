@@ -1,67 +1,30 @@
 import React, { useEffect, useState } from "react";
-import { useLanguage } from "../Component/LanguageContext";
-import HeartButton from "../Component/HeartButton";
-import { get_home } from "../Conf/api";
-
-
-// 搜索组件保持不变
-const SearchBar = ({ onSearch }) => {
-  const { t } = useLanguage();
-  const [searchTerm, setSearchTerm] = useState("");
-
-  const handleSearch = () => {
-    onSearch(searchTerm);
-  };
-
-  return (
-    <div className="search-bar">
-      <input
-        type="text"
-        placeholder="搜索旅行目的地"
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
-      />
-      <button onClick={handleSearch}>搜索</button>
-    </div>
-  );
-};
-
-const hot = 12;
-
-// 旅行指南卡片组件
-const TravelGuideCard = ({ id, title, destination, hot, img_url }) => (
-  <div className="travel-guide-card">
-    <img
-      src={img_url}
-      alt={destination}
-      className="guide-image"
-      style={{
-        width: "100%",
-        height: "200px",
-        objectFit: "cover",
-        borderRadius: "10px",
-      }}
-    />
-    <h4>{title}</h4>
-    <p>目的地：{destination}</p>
-    <HeartButton initialCount={hot} travel_id={id} />
-  </div>
-);
+import TravelGuideCard from "../Component/home/TravelGuideCard";
+import SearchBar from "../Component/home/SearchBar";
+import { get_home, home_search } from "../Conf/api";
 
 // 广场页面组件
 const Home = () => {
   const [plans, setPlans] = useState([]);
+  const hasFetched = useRef(false); // 防止重复请求
+  const [editingPlan, setEditingPlan] = useState(null);
+
   useEffect(() => {
     console.info("Home useEffect");
-    if (plans && plans.length > 0) {
-      console.info("Plans already exist, skipping fetch.");
-      return; // 如果有数据，不发起请求
+    if (hasFetched.current){
+      console.info(hasFetched)
+      return; // 已经获取过数据，直接跳过
+    } else{
+      hasFetched.current = true;
     }
+    console.info("Fetching plans...");
+
     get_home()
       .then((response) => {
-        if (response.data && Array.isArray(response.data.data)) {
-          console.info(response.data.data);
-          setPlans(response.data.data);
+        const data_list = response.data.data
+        console.info("get_home data:"+data_list)
+        if (response.data && Array.isArray(data_list)) {
+          setPlans(data_list);
         } else {
           console.error("Fetched plans is not an array:", response.data);
         }
@@ -69,18 +32,23 @@ const Home = () => {
       .catch((error) => {
         console.error("Net Error", error);
       });
+
   }, []);
 
   const handleSearch = (term) => {
-    // 搜索逻辑：模糊匹配目的地或标题
-    const filteredGuides = guides.filter(
-      (guide) => guide.destination.includes(term) || guide.title.includes(term)
-    );
-
-    // 如果搜索结果为空，可以显示提示
-    if (filteredGuides.length === 0) {
-      alert("没有找到matching的旅行指南");
-    }
+    home_search(term)
+    .then((response) => {
+      const data_list = response.data.data;
+      console.info("home_search data:" + data_list);
+      if (response.data && Array.isArray(data_list)) {
+        setPlans(data_list);
+      } else {
+        console.error("Fetched plans is not an array:", response.data);
+      }
+    })
+    .catch((error) => {
+      console.error("Net Error", error);
+    });
   };
 
   return (
@@ -95,7 +63,8 @@ const Home = () => {
         }}
       >
         {plans.map((guide) => (
-          <TravelGuideCard key={guide.id} {...guide} />
+          <TravelGuideCard key={guide.id} {...guide}
+          />
         ))}
       </div>
     </div>

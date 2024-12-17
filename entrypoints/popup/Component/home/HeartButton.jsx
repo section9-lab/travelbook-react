@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { BsFillHeartFill } from "react-icons/bs";
-import { update_hot } from "../Conf/api";
+import { update_hot } from "../../Conf/api";
 
 const HeartButton = ({ initialCount, travel_id }) => {
   const [hot, setHot] = useState(initialCount); // 初始热度值
