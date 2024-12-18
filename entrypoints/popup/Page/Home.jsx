@@ -7,7 +7,6 @@ import { get_home, home_search } from "../Conf/api";
 const Home = () => {
   const [plans, setPlans] = useState([]);
   const hasFetched = useRef(false); // 防止重复请求
-  const [editingPlan, setEditingPlan] = useState(null);
 
   useEffect(() => {
     console.info("Home useEffect");
@@ -17,12 +16,12 @@ const Home = () => {
     } else{
       hasFetched.current = true;
     }
-    console.info("Fetching plans...");
+    console.info("Fetching get_home...");
 
     get_home()
       .then((response) => {
         const data_list = response.data.data
-        console.info("get_home data:"+data_list)
+        console.info(data_list)
         if (response.data && Array.isArray(data_list)) {
           setPlans(data_list);
         } else {

@@ -15,8 +15,9 @@
     "postinstall": "wxt prepare"
   },
   "dependencies": {
-    "@fingerprintjs/fingerprintjs": "^4.5.1",
+    "antd": "^5.22.5",
     "axios": "^1.7.8",
+    "crypto-js": "^4.2.0",
     "date-fns": "^4.1.0",
     "react": "^18.3.1",
     "react-date-range": "^2.0.1",
