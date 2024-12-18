@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useLanguage } from "./LanguageContext";
 import DateTimeRangePicker from "./DateTimeRangePicker";
 import TravelGuideDisplay from "./TravelGuideDisplay";
@@ -13,8 +13,11 @@ const AddTravelPlanModal = ({ isOpen, onClose, onSubmit }) => {
   const [source, setSource] = useState("");
   const [destination, setDestination] = useState("");
   const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
-  const [apiResponse, setApiResponse] = useState(null);
+  const [travelPlan, setTravelPlan] = useState(null);
   const [loading, setLoading] = useState(false); // 是否显示进度条
+
+  console.info("=====AddTravelPlanModal========")
+  console.info("showAdd:",showAdd)
 
   const handleDateRangeChange = (start, end) => {
     setStartTime(start);
@@ -28,30 +31,35 @@ const AddTravelPlanModal = ({ isOpen, onClose, onSubmit }) => {
     destination,
   };
 
-  const handleSubmit = async () => {
+
+  const handleSubmit = () => {
     setLoading(true); // 显示进度条
+    console.info("======gen_travel_plans=====");
     gen_travel_plans(aiGentravelPlan)
       .then((response) => {
-        const travelData = response.data;
-        console.info(travelData);
-        setApiResponse(travelData);
+        console.info("gen_travel_plans:",response.data)
+        setTravelPlan(response.data);
         setShowAdd(false);
+        setLoading(false);
       })
       .catch((error) => {
         alert("Network Error");
         console.error("Error generating guide:", error);
-        setApiResponse(null);
+        setTravelPlan(null);
+        setShowAdd(false);
+        setLoading(false);
       });
   };
 
   const handleGuideSave = (savedGuide) => {
     onSubmit(savedGuide);
-    setApiResponse(null);
+    setTravelPlan(null);
     onClose();
+    setShowAdd(true);
   };
 
   const handleGuideCancel = () => {
-    setApiResponse(null);
+    setTravelPlan(null);
   };
 
   const options = [
@@ -60,7 +68,7 @@ const AddTravelPlanModal = ({ isOpen, onClose, onSubmit }) => {
     { value: "openai", label: "OpenAI" },
     { value: "hunyuan", label: "HunYuan" },
     { value: "kimi", label: "Kimi" },
-    { value: "qwq", label: "Qwq" },
+    { value: "qwq", label: "Qwen" },
     // 可以继续添加更多选项
   ];
   const handleChange = (event) => {
@@ -71,7 +79,10 @@ const AddTravelPlanModal = ({ isOpen, onClose, onSubmit }) => {
     aiGentravelPlan.model = selectedValue || "gemini";
   };
 
-  if (!isOpen) return null;
+  if (isOpen === false){
+    console.info("isOpen:",isOpen)
+    return null;
+  } 
 
   return (
     <div className="modal-overlay">
@@ -172,10 +183,10 @@ const AddTravelPlanModal = ({ isOpen, onClose, onSubmit }) => {
         </div>
       )}
       {/* 在此处根据response结果展开卡片，如果请求结果为空，或没有请求则不展开 */}
-      {apiResponse && (
+      {travelPlan  && (
         <div className="guide-response-container">
           <TravelGuideDisplay
-            initialGuide={apiResponse}
+            inGuide={travelPlan}
             onSave={handleGuideSave}
             onCancel={handleGuideCancel}
           />

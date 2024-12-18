@@ -22,7 +22,7 @@ export const update_hot = (travel_id) => {
   });
 };
 
-export const travel_plans_list = (duid) => {
+export const travel_plans_list = async (duid) => {
   return axios.get(`${API_BASE_URL}/travel_plans_list`, {
     params: { user_id: duid },
   });
@@ -49,5 +49,20 @@ export const gen_travel_plans = (GenPlan) => {
       "Access-Control-Allow-Origin": "travelbook",
       "Content-Type": "application/json",
     },
+  });
+};
+
+export const edit_travel_plans = (Plan) => {
+  return axios.post(`${API_BASE_URL}/edit_travel_plans`, Plan, {
+    headers: {
+      "Access-Control-Allow-Origin": "travelbook",
+      "Content-Type": "application/json",
+    },
+  });
+};
+
+export const delete_travel_plan = (travel_id) => {
+  return axios.get(`${API_BASE_URL}/delete_travel_plan`, {
+    params: { id: travel_id },
   });
 };

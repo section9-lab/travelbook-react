@@ -11,7 +11,7 @@ const AppLogo = () => {
 
   return (
     <div className="app-logo">
-      <img src={Logo} height="40" width="40" alt="Logo" />
+      <img src={Logo} height="60" width="62" alt="Logo" />
       <span>{language === "zh" ? " 路书" : " TravelBook"}</span>
     </div>
   );

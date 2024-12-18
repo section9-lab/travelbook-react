@@ -44,7 +44,10 @@ const DateTimeRangePicker = ({
   };
 
   return (
-    <div className="date-time-range-picker">
+    <div className="date-time-range-picker"
+    style={{
+      width: "400px"
+    }}>
       <DateRange
         editableDateInputs={true}
         onChange={handleSelect}
