@@ -14,7 +14,14 @@ const translations = {
     confirm: '确认',
     cancel: '取消',
     search: '搜索',
-    rating: '热度'
+    rating: '热度',
+    history: '历史',
+    culture: "文化",
+    famous_spots: "景点",
+    transport: "交通",
+    accommodation: "住宿",
+    food: "饮食",
+    weather: "天气状况"
   },
   en: {
     square: 'Square',
@@ -28,7 +35,14 @@ const translations = {
     confirm: 'Confirm',
     cancel: 'Cancel',
     search: 'Search',
-    rating: 'Rating'
+    rating: 'Rating',
+    history: "History",
+    culture: "Culture",
+    famous_spots: "Landmark",
+    transport: "Transportation",
+    accommodation: "Accommodations",
+    food: "Food",
+    weather: "Description weather"
   }
 };
 
@@ -40,14 +54,14 @@ interface LanguageContextType {
 }
 
 const LanguageContext = createContext<LanguageContextType>({
-  language: 'zh',
+  language: 'en',
   t: () => '',
   toggleLanguage: () => {}
 });
 
 // Language Provider Component
 export const LanguageProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const [language, setLanguage] = useState<'zh' | 'en'>('zh');
+  const [language, setLanguage] = useState<'zh' | 'en'>('en');
 
   const toggleLanguage = () => {
     setLanguage(prev => prev === 'zh' ? 'en' : 'zh');

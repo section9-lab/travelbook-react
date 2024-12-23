@@ -1,7 +1,7 @@
 import Home from "./Page/Home";
 import Personal from "./Page/Personal";
 import { LanguageProvider, useLanguage } from "./Component/LanguageContext";
-import Logo from "../../assets/logo3.png";
+import Logo from "../../assets/logo.png";
 import { BiSolidHomeAlt2, BiSolidUser } from "react-icons/bi";
 import "./App.css";
 

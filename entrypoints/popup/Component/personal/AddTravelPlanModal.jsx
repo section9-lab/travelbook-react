@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { useLanguage } from "./LanguageContext";
+import { useLanguage } from "../LanguageContext";
 import DateTimeRangePicker from "./DateTimeRangePicker";
 import TravelGuideDisplay from "./TravelGuideDisplay";
-import { gen_travel_plans } from "../Conf/api";
+import { gen_travel_plans } from "../../Conf/api";
 import { BiCalendar } from "react-icons/bi";
+import "./AddTravelPlanModal.css";
 
 const AddTravelPlanModal = ({ isOpen, onClose, onSubmit }) => {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const [showAdd, setShowAdd] = useState(true); // 显示添加旅行计划框
   const [startTime, setStartTime] = useState("");
   const [endTime, setEndTime] = useState("");
@@ -16,8 +17,7 @@ const AddTravelPlanModal = ({ isOpen, onClose, onSubmit }) => {
   const [travelPlan, setTravelPlan] = useState(null);
   const [loading, setLoading] = useState(false); // 是否显示进度条
 
-  console.info("=====AddTravelPlanModal========")
-  console.info("showAdd:",showAdd)
+  console.info("=====AddTravelPlanModal========");
 
   const handleDateRangeChange = (start, end) => {
     setStartTime(start);
@@ -31,13 +31,12 @@ const AddTravelPlanModal = ({ isOpen, onClose, onSubmit }) => {
     destination,
   };
 
-
   const handleSubmit = () => {
     setLoading(true); // 显示进度条
     console.info("======gen_travel_plans=====");
-    gen_travel_plans(aiGentravelPlan)
+    gen_travel_plans(aiGentravelPlan, language)
       .then((response) => {
-        console.info("gen_travel_plans:",response.data)
+        console.info("gen_travel_plans:", response.data);
         setTravelPlan(response.data);
         setShowAdd(false);
         setLoading(false);
@@ -60,6 +59,8 @@ const AddTravelPlanModal = ({ isOpen, onClose, onSubmit }) => {
 
   const handleGuideCancel = () => {
     setTravelPlan(null);
+    setShowAdd(false);
+    setLoading(false);
   };
 
   const options = [
@@ -79,10 +80,10 @@ const AddTravelPlanModal = ({ isOpen, onClose, onSubmit }) => {
     aiGentravelPlan.model = selectedValue || "gemini";
   };
 
-  if (isOpen === false){
-    console.info("isOpen:",isOpen)
+  if (isOpen === false) {
+    console.info("isOpen:", isOpen);
     return null;
-  } 
+  }
 
   return (
     <div className="modal-overlay">
@@ -183,7 +184,7 @@ const AddTravelPlanModal = ({ isOpen, onClose, onSubmit }) => {
         </div>
       )}
       {/* 在此处根据response结果展开卡片，如果请求结果为空，或没有请求则不展开 */}
-      {travelPlan  && (
+      {travelPlan && (
         <div className="guide-response-container">
           <TravelGuideDisplay
             inGuide={travelPlan}
