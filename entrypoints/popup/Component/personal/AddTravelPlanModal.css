@@ -1,0 +1,166 @@
+.modal-overlay {
+    width: 100%; 
+    /* 设置元素宽度为100%，即占满整个容器宽度 */
+    position: fixed; 
+    /* 使用固定定位，元素位置相对于浏览器窗口固定 */
+    top: 0; 
+    /* 元素顶部与浏览器窗口顶部对齐 */
+    left: 0; 
+    /* 元素左侧与浏览器窗口左侧对齐 */
+    right: 0; 
+    /* 元素右侧与浏览器窗口右侧对齐 */
+    bottom: 0; 
+    /* 元素底部与浏览器窗口底部对齐 */
+    background-color: rgba(0, 0, 0, 0.5); 
+    /* 设置背景颜色为半透明黑色，透明度为0.5 */
+    flex-direction: column; 
+    /* 设置为列布局，子元素垂直排列 */
+    align-items: center; 
+    /* 水平居中对齐子元素 */
+    justify-content: center; 
+    /* 垂直居中对齐子元素 */
+    overflow-y: auto; 
+    /* 当内容超出元素高度时，显示垂直滚动条 */
+    z-index: 1; 
+    /* 添加较高的z-index值 */
+}
+
+.modal-content {
+    background-color: #fff;
+    /* 使用简化的白色 */
+    padding: 2px;
+    /* 增加内边距，提升内容可读性 */
+    max-width: 90%;
+    /* 限制模态框宽度，避免过宽 */
+    border: 1px solid #ddd;
+    /* 更柔和的边框颜色 */
+    border-radius: 15px;
+    /* 稍大一点的圆角，视觉更柔和 */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    /* 改善阴影，使其更自然 */
+    transition: all 0.3s ease;
+    /* 添加动画效果 */
+    margin: 0 auto;
+    /* 居中 */
+    overflow: hidden;
+    /* 防止内容溢出 */
+}
+
+.modal-content input {
+    width: 100%;
+    padding: 7px;
+    margin-bottom: 5px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.modal-actions {
+    display: flex;
+    /* justify-content: space-between;按钮之间间隔模式 */
+}
+
+.modal-actions button {
+    padding: 5px 8px;
+    border: none;
+    border-radius: 5px;
+}
+
+.modal-actions button:first-child {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.modal-actions button:nth-child(2) {
+    margin-left: 10px;
+    /* 左侧距离 */
+    background-color: #4CAF50;
+    color: white;
+}
+
+
+.modal-actions button:last-child {
+    margin-left: 10px;
+    background-color: #f44336;
+    color: white;
+}
+
+.progress-bar {
+    height: 5px;
+    background-color: #4CAF50;
+    transition: width 0.5s ease;
+}
+
+.guide-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.editable-section {
+    margin-top: 15px;
+}
+
+.editable-section input,
+.editable-section textarea {
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.start-time {
+    width: 45%;
+}
+
+.end-time {
+    width: 45%;
+}
+
+.guide-response-container {
+    width: 98%;
+    background-color: white;
+    padding: 5px;
+    width: 95%;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0.2, 0.4, 0.6);
+}
+
+.calendar-button {
+    padding: 0px, 10px;
+    font-size: x-large;
+    background-color: #fff;
+    border: none;
+}
+
+
+.ai-select-container {
+    position: relative;
+    display: inline-block;
+    width: 110px;
+}
+
+.ai-select-container select {
+    width: 100%;
+    padding: 8px 12px;
+    font-size: 13px;
+    color: #333;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    appearance: none;
+    background: transparent;
+    cursor: pointer;
+}
+
+.ai-select-container::after {
+    content: '▼';
+    /* 下拉箭头 */
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #333;
+    pointer-events: none;
+}
