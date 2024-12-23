@@ -102,7 +102,7 @@ const Login = ({ setAuthed, getUserId, setUserInfo }) => {
 
                 // 尝试定期检查窗口是否已关闭
                 const checkWindow = setInterval(() => {
-                  if (authWindow.closed) {
+                    if (authWindow && authWindow.closed) {
                     clearInterval(checkWindow);
                   } else {
                     try {
@@ -119,7 +119,7 @@ const Login = ({ setAuthed, getUserId, setUserInfo }) => {
 
           // 设置定时器检查窗口状态
           const checker = setInterval(() => {
-            if (authWindow.closed) {
+            if (authWindow && authWindow.closed) {
               clearInterval(checker);
               window.removeEventListener("message", handleMessage);
             }
