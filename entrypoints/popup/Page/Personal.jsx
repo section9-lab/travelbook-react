@@ -109,7 +109,7 @@ const Personal = () => {
     console.info(newPlan);
     add_travel_plans(newPlan, language)
       .then((response) => {
-        newPlan.id = response.data;
+        newPlan.id = response.data.data;
         console.info(newPlan);
         setPlans((prevPlans) => [...prevPlans, newPlan]); //在当前数组中增加一个
       })
