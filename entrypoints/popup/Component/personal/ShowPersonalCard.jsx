@@ -1,40 +1,47 @@
 import { Avatar, Card } from "antd";
-import { BiEdit, BiTrash, BiShareAlt } from "react-icons/bi";
+import { 
+  BiEdit, 
+  BiTrash, 
+  BiShareAlt, 
+  BiSolidDownload,
+  BiSolidUser 
+} from "react-icons/bi";
 const { Meta } = Card;
 
-const ShowPersonalCard = ({travel,onShare,onRemove,onEdit}) => {
-    console.info("=====ShowPersonalCard======")
-    console.info(travel)
+const ShowPersonalCard = ({ travel, onShare, onRemove, onEdit }) => {
+  console.info(travel)
   return (
     <Card
+      key={travel.id}
       style={{
-        padding: '5px',
-        width: '100%',
+        padding: "10px",
+        width: "100%",
       }}
       cover={
         <img
           alt="example"
           src={travel.img_url}
           style={{
-            maxHeight: "200px"
+            maxHeight: "200px",
           }}
         />
       }
-      actions={
-        [
-            <BiShareAlt key="share"onClick={() => onShare(travel.id)}/>,
-            <BiTrash key="remove"onClick={() => onRemove(travel.id)} />,
-            <BiEdit key="edit" onClick={() => onEdit(travel)} />,
-        ]
-      }
+      actions={[
+        <BiShareAlt key="share" onClick={() => onShare(travel.id)} />,
+        <BiSolidDownload/>,
+        <BiTrash key="remove" onClick={() => onRemove(travel.id)} />,
+        <BiEdit key="edit" onClick={() => onEdit(travel)} />,
+      ]}
     >
       <Meta
-
-        title={travel.title}
-        description={"destination:"+travel.destination+"\n"}
-        avatar={
-            <Avatar src="" />
-          }
+        //description={travel.title + "\n"}
+        description={
+          <span style={{ color: 'rgba(0, 0, 0, 0.88)' }}>
+            {"Title: "+travel.title + "\n"}
+          </span>
+        }
+        title={travel.destination}
+        avatar={<Avatar src={travel?.picture} icon={<BiSolidUser />}/>}
       />
     </Card>
   );
