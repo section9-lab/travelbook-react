@@ -1,4 +1,4 @@
-import { Avatar, Card, Popconfirm,message } from "antd";
+import { Avatar, Card, Popconfirm, message } from "antd";
 import {
   ShareAltOutlined,
   DownloadOutlined,
@@ -11,9 +11,9 @@ import {
 const { Meta } = Card;
 
 const ShowPersonalCard = ({ travel, onShare, onRemove, onEdit }) => {
-  const clickDownload=(id)=>{
-    message.info("download develop....")
-  }
+  const clickDownload = (id) => {
+    message.info("download develop....");
+  };
   return (
     <Card
       key={travel.id}
@@ -55,29 +55,19 @@ const ShowPersonalCard = ({ travel, onShare, onRemove, onEdit }) => {
         >
           <DeleteOutlined key="remove" />
         </Popconfirm>,
-        <Popconfirm
-          title="Edit the plan"
-          onConfirm={() => onEdit(travel)}
-          okText="Yes"
-          cancelText="No"
-        >
-          <EditOutlined key="edit" />
-        </Popconfirm>,
+
+        <EditOutlined key="edit" onClick={() => onEdit(travel)} />,
       ]}
     >
       <Meta
-        //description={travel.title + "\n"}
-
         description={
           <>
             <span>{travel?.username}</span>
             <div style={{ color: "rgba(0, 0, 0, 0.88)" }}>
-              <span >
-                {travel.title}
-              </span>
+              <span>{travel.title}</span>
               <br />
               <EnvironmentOutlined />
-              <span>{travel?.destination}</span>
+              <span>{" "+travel?.destination}</span>
             </div>
           </>
         }

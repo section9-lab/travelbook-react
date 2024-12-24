@@ -154,3 +154,16 @@
     background-color: #c82333;
     /* 背景颜色变深 */
   }
+
+:where(.css-dev-only-do-not-override-1kf000u).ant-tabs-left > .ant-tabs-nav .ant-tabs-tab, 
+:where(.css-dev-only-do-not-override-1kf000u).ant-tabs-right > .ant-tabs-nav .ant-tabs-tab, 
+:where(.css-dev-only-do-not-override-1kf000u).ant-tabs-left > div > .ant-tabs-nav .ant-tabs-tab, 
+:where(.css-dev-only-do-not-override-1kf000u).ant-tabs-right > div > .ant-tabs-nav .ant-tabs-tab {
+    padding: 4px 4px 2px 10px;
+    text-align: center;
+}
+:where(.css-dev-only-do-not-override-1kf000u).ant-tabs-left > .ant-tabs-content-holder > .ant-tabs-content > .ant-tabs-tabpane,
+:where(.css-dev-only-do-not-override-1kf000u).ant-tabs-left > div > .ant-tabs-content-holder > .ant-tabs-content > .ant-tabs-tabpane {
+    padding-left: 10px !important; /* 可添加 !important 强制覆盖 */
+    padding-right: 5px !important;
+  }

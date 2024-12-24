@@ -52,7 +52,7 @@ const HomeTravelCardList = (guide) => {
           <br />
           <EnvironmentOutlined/>
           <span style={{ fontSize: "12px" }}>
-            {guide.destination}
+            {" "+guide?.destination}
           </span>
         </div>
 

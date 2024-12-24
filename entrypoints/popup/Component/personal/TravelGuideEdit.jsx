@@ -1,76 +1,122 @@
 import React, { useState } from "react";
 import { Tabs, Input } from "antd";
-import "./TravelGuideDisplay.css";
+import "./TravelGuideEdit.css";
+import { 
+  EnvironmentOutlined,
+  AlertOutlined,
+  CarOutlined,
+  CameraOutlined,
+  CoffeeOutlined,
+  HomeOutlined,
+  CloudOutlined,
+} from "@ant-design/icons";
 
 const { TextArea } = Input;
 
-const TravelGuideDisplay = ({ inGuide, onSave, onCancel }) => {
-  console.info("=====TravelGuideDisplay=======");
-  console.info(inGuide);
+const TravelGuideEdit = ({ inGuide, onSave, onCancel }) => {
   const [guide, setGuide] = useState(inGuide);
-  console.info(guide.about)
 
-  let aboutList =[
+  console.info("=====TravelGuideEdit=======");
+
+  console.info(guide?.about);
+  if (inGuide === null) {
+    console.info(inGuide);
+    return;
+  }
+
+  useEffect(() => {
+    console.info("Updated guide:", guide.about);
+  }, [guide]);
+
+  let aboutList = [
     {
       key: "summary",
-      label: "Summary",
+      label: <AlertOutlined />,
       content: guide?.about?.summary || "No information available",
     },
     {
       key: "hot_spots",
-      label: "HotSpots",
-      content: guide?.about?.hot_spots||"No information available",  // 如果不是数组，使用默认值
+      label: <CameraOutlined/>,
+      content: guide?.about?.hot_spots || "No information available", // 如果不是数组，使用默认值
     },
     {
       key: "transport",
-      label: "Transport",
+      label: <CarOutlined />,
       content: guide?.about?.transport || "No information available",
     },
     {
       key: "stay",
-      label: "Stay",
+      label: <HomeOutlined />,
       content: guide?.about?.stay || "No information available",
     },
     {
       key: "food",
-      label: "Food",
+      label: <CoffeeOutlined />,
       content: guide?.about?.food || "No information available",
     },
     {
       key: "weather",
-      label: "Weather",
+      label: <CloudOutlined />,
       content: guide?.about?.weather || "No information available",
     },
-  ]
+  ];
 
-  const items = aboutList.map((tab, index) => (
-    console.info(tab),
-    {
-    label: tab.label,
-    key: tab.key,
-    children: (
-      <div>
-        <TextArea
-          value={tab.content}
-          onChange={(e) => handleAttractionsChange(index, e)}
-          placeholder={`Edit ${tab.label} here...`}
-          autoSize={{
-            minRows: 4,
-            maxRows: 14
-          }}
-        />
-      </div>
-    ),
-  }));
+  const items = aboutList.map((tab, index) => {
+    console.info("item", tab);
+
+    if (Array.isArray(tab.content)) {
+      console.info(tab);
+      //return null; // 处理数组时返回什么需要明确
+      return {
+        label: tab.label,
+        // label: <CarOutlined />,
+        key: tab.key,
+        children: (
+          <div>
+            {tab.content.map((item, idx) => (
+              <div key={idx} style={{ marginBottom: "10px" }}>
+                <Input
+                  prefix={<EnvironmentOutlined />}
+                  value={item} // 设置初始值
+                  onChange={(e) =>
+                    handleInputChange(index, idx, e.target.value)
+                  } // 处理输入变化
+                  placeholder={`Edit ${item} here...`}
+                />
+              </div>
+            ))}
+          </div>
+        ),
+      };
+    } else {
+      return {
+        label: tab.label,
+        key: tab.key,
+        children: (
+          <div>
+            <TextArea
+              value={tab.content}
+              onChange={(e) => handleAttractionsChange(index, e)}
+              placeholder={`Edit ${tab.label} here...`}
+              autoSize={{
+                minRows: 4,
+                maxRows: 14,
+              }}
+            />
+          </div>
+        ),
+      };
+    }
+  });
 
   const handleAttractionsChange = (index, event) => {
     const updatedTableList = [...aboutList];
     updatedTableList[index].content = event.target.value;
 
-    console.info("updatedTableList:",updatedTableList)
+    console.info("updatedTableList:", updatedTableList);
     aboutList = updatedTableList;
 
-     // 转换为目标结构
+    // 转换为目标结构
     const transformedAbout = updatedTableList.reduce((acc, item) => {
       acc[item.key] = item.content;
       return acc;
@@ -82,20 +128,29 @@ const TravelGuideDisplay = ({ inGuide, onSave, onCancel }) => {
     }));
   };
 
-
-
-  useEffect(() => {
-    console.info("Updated guide:", guide.about);
-  }, [guide]);
-
   const handleTitleChange = (e) => {
     setGuide((prev) => ({
       ...prev,
       title: e.target.value,
     }));
   };
+  const handleInputChange = (tabIndex, inputIndex, newValue) => {
+    setGuide((prev) => {
+      // 更新 about 的指定数组内容
+      const updatedAbout = { ...prev.about };
 
+      if (Array.isArray(updatedAbout[aboutList[tabIndex].key])) {
+        updatedAbout[aboutList[tabIndex].key] = updatedAbout[
+          aboutList[tabIndex].key
+        ].map((item, idx) => (idx === inputIndex ? newValue : item));
+      }
 
+      return {
+        ...prev,
+        about: updatedAbout,
+      };
+    });
+  };
 
   const handleTravelsChange = (dayIndex, e) => {
     const newTravels = [...guide.travels];
@@ -157,7 +212,7 @@ const TravelGuideDisplay = ({ inGuide, onSave, onCancel }) => {
   };
 
   return (
-    <div style={{width: "100%",}}>
+    <div style={{ width: "100%" }}>
       <img
         src={guide.img_url}
         style={{
@@ -167,14 +222,17 @@ const TravelGuideDisplay = ({ inGuide, onSave, onCancel }) => {
           borderRadius: "15px",
         }}
       />
+      <Input addonBefore="Title" 
+      value={guide.title}
+      onChange={handleTitleChange}
+      />
 
-      <span>Title:</span>
-      <Input
+      {/* <Input
         showCount
         maxLength={85}
         value={guide.title}
         onChange={handleTitleChange}
-      />
+      /> */}
 
       <p>About:</p>
       <Tabs
@@ -185,7 +243,7 @@ const TravelGuideDisplay = ({ inGuide, onSave, onCancel }) => {
           padding: "0 0 15px 0",
         }}
         items={items}
-        />
+      />
       <p>Travels:</p>
       <Tabs
         defaultActiveKey="1"
@@ -227,4 +285,4 @@ const TravelGuideDisplay = ({ inGuide, onSave, onCancel }) => {
   );
 };
 
-export default TravelGuideDisplay;
+export default TravelGuideEdit;
