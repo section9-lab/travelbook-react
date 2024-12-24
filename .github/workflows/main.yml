@@ -1,0 +1,15 @@
+name: Vercel Heartbeat Check
+
+on:
+  schedule:
+    - cron: '*/10 * * * *' # 每 10 分钟执行一次
+jobs:
+  heartbeat:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check Website Health
+        uses: jtalk/url-health-check-action@v4
+        with:
+          url: 'https://travelbook.section9lab.cn/home'
+          max-attempts: 100
+          retry-delay: 60s
