@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Spin, Avatar, Card, message } from "antd";
-import { BsFillPersonFill } from "react-icons/bs";
+import { LoadingOutlined } from "@ant-design/icons";
 import CryptoJS from "crypto-js";
-
 import { useLanguage } from "../Component/LanguageContext";
 import AddTravelPlanModal from "../Component/personal/AddTravelPlanModal";
 import TravelGuideDisplay from "../Component/personal/TravelGuideDisplay";
@@ -17,6 +16,8 @@ import {
   delete_travel_plan,
   googleAuthLogout,
 } from "../Conf/api";
+
+import { UserOutlined } from "@ant-design/icons";
 
 const { Meta } = Card;
 
@@ -33,8 +34,7 @@ const Personal = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingPlan, setEditingPlan] = useState(null);
   const [plans, setPlans] = useState([]);
-  const [load, setLoad] = useState(false);
-  //const [userInfo, setUserInfo] = useState(userInfo);
+  const [loading, setLoading] = useState(false);
   const userInfo = localStorage.getItem("userInfo")
     ? JSON.parse(localStorage.getItem("userInfo"))
     : null;
@@ -47,7 +47,6 @@ const Personal = () => {
     console.info("Personal useEffect plans:", plans);
     console.info("isAuthed", isAuthed);
     console.info("userInfo:", userInfo);
-
     if (plans && plans.length > 0) {
       console.info("Plans already exist, skipping fetch.");
       return; // 如果有数据，不发起请求
@@ -57,13 +56,13 @@ const Personal = () => {
   }, []);
 
   const getPersonalPlanList = async () => {
-    setLoad(true);
+    setLoading(true);
     console.info("==travel_plans_list==");
     const userID = getUserId();
     console.info(userID);
     await travel_plans_list(userID)
       .then((response) => {
-        setLoad(false);
+        setLoading(false);
         if (Object.entries(response.data.data).length === 0) {
           console.info("travel_plans_list is null:", response.data.data);
         } else if (response.data && Array.isArray(response.data.data)) {
@@ -75,17 +74,9 @@ const Personal = () => {
       })
       .catch((error) => {
         console.error("Net Error", error);
-        travel_plans_list(userID).then((response) => {
-          setLoad(false);
-          if (Object.entries(response.data.data).length === 0) {
-            console.info("travel_plans_list is null:", response.data.data);
-          } else if (response.data && Array.isArray(response.data.data)) {
-            console.info("travel_plans_list:", response.data.data);
-            setPlans(response.data.data);
-          } else {
-            console.error("travel_plans_list is bad:", response.data.data);
-          }
-        });
+      })
+      .finally(() => {
+        setLoading(false);
       });
   };
 
@@ -149,18 +140,7 @@ const Personal = () => {
     setEditingPlan(plan);
   };
 
-  const clickShare = (planId) => {
-    console.info("clickShare planId", planId);
-    // 显示确认框，提示用户是否发布
-    const confirmed = window.confirm("Are you sure publish this plan?");
-
-    // 如果用户点击“确定”，则继续执行请求
-    if (confirmed) {
-      handleShareTravel(planId); // 调用传入的 handleShare 函数
-    }
-  };
-
-  const handleShareTravel = (id) => {
+  const clickShare = (id) => {
     console.info("handleShare travel id:", id);
     console.info("plans:", plans);
 
@@ -175,23 +155,18 @@ const Personal = () => {
       });
   };
 
-  const handleRemoveTravel = (id) => {
-    const confirmed = window.confirm("Are you sure remove this plan?");
-
-    // 如果用户点击“确定”，则继续执行请求
-    if (confirmed) {
-      console.info("handleRemove id:" + id);
-      delete_travel_plan(id)
-        .then((response) => {
-          message.success("Remove Success");
-          console.info(response.data);
-          setPlans((prevPlans) => prevPlans.filter((plan) => plan.id !== id));
-        })
-        .catch((error) => {
-          message.error("Remove Failure");
-          console.error("Net Error:", error);
-        });
-    }
+  const clickDelete = (id) => {
+    console.info("handleRemove id:" + id);
+    delete_travel_plan(id)
+      .then((response) => {
+        message.success("Remove Success");
+        console.info(response.data);
+        setPlans((prevPlans) => prevPlans.filter((plan) => plan.id !== id));
+      })
+      .catch((error) => {
+        message.error("Remove Failure");
+        console.error("Net Error:", error);
+      });
   };
 
   const toggleModal = (target) => {
@@ -244,6 +219,52 @@ const Personal = () => {
     );
   }
 
+  const LoadingView = () => (
+    <div
+      style={{
+        margin: "0 auto",
+        position: "absolute",
+        top: "50%",
+        left: "50%",
+        transform: "translate(-50%, -50%)",
+      }}
+    >
+      <Spin indicator={<LoadingOutlined style={{ fontSize: 48 }} spin />} />
+    </div>
+  );
+
+  const ContentView = ({ plans }) => (
+    <>
+      {Array.isArray(plans) && plans.length > 0 ? (
+        plans.map((plan) => (
+          <React.Fragment key={plan.id}>
+            <ShowPersonalCard
+              travel={plan}
+              onShare={() => clickShare(plan.id)}
+              onRemove={clickDelete}
+              onEdit={startEditPlan}
+            />
+            <br />
+          </React.Fragment>
+        ))
+      ) : (
+        <p
+          style={{
+            textAlign: "center",
+            padding: "50px",
+            fontSize: "16px",
+            color: "#888",
+          }}
+        >
+          <span>No travel plan.</span>
+          <br />
+          <br />
+          <span>Please click the Add button to generate your travel plan.</span>
+        </p>
+      )}
+    </>
+  );
+
   return (
     <div className="personal-center">
       {
@@ -259,9 +280,7 @@ const Personal = () => {
           }}
         >
           <Meta
-            avatar={
-              <Avatar src={userInfo?.picture} icon={<BsFillPersonFill />} />
-            }
+            avatar={<Avatar src={userInfo?.picture} icon={<UserOutlined />} />}
             title={userInfo?.username}
             description={userInfo?.email}
             style={{ marginBottom: "2px" }}
@@ -269,33 +288,8 @@ const Personal = () => {
           <button onClick={handleLogout}>LOG OUT</button>
         </Card>
       }
-      {Array.isArray(plans) && plans.length > 0 ? (
-        plans.map((plan) => (
-          <ShowPersonalCard
-            key={plan.id}
-            travel={plan}
-            onShare={() => clickShare(plan.id)}
-            onRemove={handleRemoveTravel}
-            onEdit={startEditPlan}
-          />
-        ))
-      ) : plans.length === 0 ? (
-        <p
-          style={{
-            textAlign: "center",
-            padding: "50px",
-            fontSize: "16px",
-            color: "#888",
-          }}
-        >
-          <span>No travel plan.</span>
-          <br />
-          <br />
-          <span>Please click the Add button to generate your travel plan.</span>
-        </p>
-      ) : (
-        <Spin style={{ padding: "200px" }} size="large" />
-      )}
+
+      {loading ? <LoadingView /> : <ContentView plans={plans} />}
 
       <button className="add-plan-button" onClick={() => toggleModal(true)}>
         +

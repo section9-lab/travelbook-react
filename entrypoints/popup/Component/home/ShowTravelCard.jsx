@@ -1,4 +1,8 @@
 import { Tabs, Card } from "antd";
+import {
+  EnvironmentOutlined,
+} from "@ant-design/icons";
+
 
 const { TabPane } = Tabs;
 
@@ -18,8 +22,18 @@ const ShowTravelCard = ({ guide, isOpen, onClose }) => {
     {
       key: "hot_spots",
       label: "HotSpots",
-      content:
-        guide?.about?.hot_spots?.join("\n\n") || "No information available",
+      content: guide?.about?.hot_spots?.length > 0 ? (
+        <div>
+          {guide.about.hot_spots.map((spot, index) => (
+            <div key={index} style={{ display: "flex", alignItems: "center", marginBottom: "4px" }}>
+              <EnvironmentOutlined style={{ marginRight: "8px" }} />
+              {spot}
+            </div>
+          ))}
+        </div>
+      ) : (
+        "No information available"
+      ),
     },
     {
       key: "transport",

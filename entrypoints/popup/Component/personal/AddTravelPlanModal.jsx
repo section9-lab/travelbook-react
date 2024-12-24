@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useLanguage } from "../LanguageContext";
-import DateTimeRangePicker from "./DateTimeRangePicker";
 import TravelGuideDisplay from "./TravelGuideDisplay";
+import { Button, Input, Select, DatePicker } from "antd";
 import { gen_travel_plans } from "../../Conf/api";
-import { BiCalendar } from "react-icons/bi";
 import "./AddTravelPlanModal.css";
+
+const { RangePicker } = DatePicker;
 
 const AddTravelPlanModal = ({ isOpen, onClose, onSubmit }) => {
   const { t, language } = useLanguage();
@@ -16,13 +17,6 @@ const AddTravelPlanModal = ({ isOpen, onClose, onSubmit }) => {
   const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
   const [travelPlan, setTravelPlan] = useState(null);
   const [loading, setLoading] = useState(false); // 是否显示进度条
-
-  console.info("=====AddTravelPlanModal========");
-
-  const handleDateRangeChange = (start, end) => {
-    setStartTime(start);
-    setEndTime(end);
-  };
 
   const aiGentravelPlan = {
     startTime,
@@ -63,21 +57,25 @@ const AddTravelPlanModal = ({ isOpen, onClose, onSubmit }) => {
     setLoading(false);
   };
 
-  const options = [
-    { value: "gemini", label: "Gemini" },
-    { value: "llama", label: "Llama3" },
-    { value: "openai", label: "OpenAI" },
-    { value: "hunyuan", label: "HunYuan" },
-    { value: "kimi", label: "Kimi" },
-    { value: "qwq", label: "Qwen" },
-    // 可以继续添加更多选项
-  ];
   const handleChange = (event) => {
     const selectedValue = event.target.value;
     console.info("select:", selectedValue);
 
     // 如果 selectedValue 为空，使用默认值
     aiGentravelPlan.model = selectedValue || "gemini";
+  };
+  // 处理时间变化
+  const handleRangeChange = (dates, dateStrings) => {
+    console.info("dates:", dates);
+    console.info("dateStrings:", dateStrings);
+    if (!dates) {
+      console.log("日期已清空");
+      return;
+    }
+    console.info("start:", dateStrings[0]);
+    console.info("end:", dateStrings[1]);
+    setStartTime(dateStrings[0]);
+    setEndTime(dateStrings[1]);
   };
 
   if (isOpen === false) {
@@ -86,114 +84,83 @@ const AddTravelPlanModal = ({ isOpen, onClose, onSubmit }) => {
   }
 
   return (
-    <div className="modal-overlay">
+    <>
       {showAdd && (
-        <div className="modal-content">
-          <h2>{t("addTravelPlan")}</h2>
-          <label>{t("travelDateRange")}</label>
-          <div className="date-input-container">
-            <input
-              type="text"
-              value={
-                startTime && endTime
-                  ? `${new Date(startTime).toLocaleString()} - ${new Date(
-                      endTime
-                    ).toLocaleString()}`
-                  : t("selectDateRange") || ""
-              }
-              readOnly
-              className="date-input"
-              style={{ width: "75%", gap: "4px" }}
-            />
-            <button
-              className="calendar-button"
-              onClick={() => setIsDatePickerOpen(true)}
-            >
-              <BiCalendar />
-            </button>
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <h2>{t("addTravelPlan")}</h2>
+            <label>{t("travelDateRange")}</label>
+            <div className="date-input-container">
+              <RangePicker
+                id={{
+                  start: "startInput",
+                  end: "endInput",
+                }}
+                onChange={handleRangeChange}
+                showTime
+              />
+              <br />
+              <br />
+              <Input
+                size="large"
+                placeholder={t("source")}
+                value={source}
+                onChange={(e) => setSource(e.target.value)}
+              />
+              <br />
+              <Input
+                size="large"
+                placeholder={t("destination")}
+                value={destination}
+                onChange={(e) => setDestination(e.target.value)}
+              />
+              <br />
+              <div className="modal-actions">
+                <Select
+                  defaultValue="gemini"
+                  style={{ width: 120 }}
+                  onChange={handleChange}
+                  options={[
+                    { value: "gemini", label: "Gemini" },
+                    { value: "llama", label: "Llama3" },
+                    { value: "openai", label: "OpenAI" },
+                    { value: "hunyuan", label: "HunYuan" },
+                    { value: "kimi", label: "Kimi" },
+                    { value: "qwq", label: "Qwen" },
+                  ]}
+                />
+                <Button type="primary" onClick={handleSubmit}>
+                  {t("generateGuide")}
+                </Button>
+
+                {loading && (
+                  <progress
+                    style={{ marginLeft: "7px", width: "20%", margin: "auto" }}
+                    value={null}
+                    max="100"
+                  />
+                )}
+                <Button type="primary" onClick={onClose} danger>
+                  Cancel
+                </Button>
+              </div>
+              <br />
+            </div>
           </div>
 
-          {isDatePickerOpen && (
-            <div
-              className="calendar-popup"
-              style={{
-                position: "absolute",
-                top: "10px",
-                width: "95%",
-                left: "0",
-                zIndex: 1000,
-                backgroundColor: "white",
-                border: "1px solid #ccc",
-                borderRadius: "10px",
-                boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
-              }}
-            >
-              <DateTimeRangePicker
-                startDate={startTime}
-                endDate={endTime}
-                onChange={handleDateRangeChange}
-                onClose={() => setIsDatePickerOpen(false)}
+          {/* 在此处根据response结果展开卡片，如果请求结果为空，或没有请求则不展开 */}
+          {travelPlan && (
+            <div className="guide-response-container">
+              <TravelGuideDisplay
+                inGuide={travelPlan}
+                onSave={handleGuideSave}
+                onCancel={handleGuideCancel}
               />
             </div>
           )}
-          <div className="input-source-location">
-            <input
-              type="text"
-              placeholder={t("source")}
-              value={source}
-              onChange={(e) => setSource(e.target.value)}
-              style={{ width: "75%", gap: "4px" }}
-            />
-          </div>
-          <div className="input-destination-location">
-            <input
-              type="text"
-              placeholder={t("destination")}
-              value={destination}
-              onChange={(e) => setDestination(e.target.value)}
-              required
-              style={{ width: "75%", gap: "4px" }}
-            />
-            *
-          </div>
-
-          <div className="modal-actions">
-            <div className="ai-select-container">
-              <select
-                id="ai-selector"
-                onChange={handleChange}
-                defaultValue="gemini"
-              >
-                {options.map((option) => (
-                  <option key={option.value} value={option.value}>
-                    {option.label}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <button onClick={handleSubmit}>{t("generateGuide")}</button>
-            {loading && (
-              <progress
-                style={{ marginLeft: "7px", width: "20%", margin: "auto" }}
-                value={null}
-                max="100"
-              />
-            )}
-            <button onClick={onClose}>{t("cancel")}</button>
-          </div>
         </div>
       )}
-      {/* 在此处根据response结果展开卡片，如果请求结果为空，或没有请求则不展开 */}
-      {travelPlan && (
-        <div className="guide-response-container">
-          <TravelGuideDisplay
-            inGuide={travelPlan}
-            onSave={handleGuideSave}
-            onCancel={handleGuideCancel}
-          />
-        </div>
-      )}
-    </div>
+    </>
   );
 };
 

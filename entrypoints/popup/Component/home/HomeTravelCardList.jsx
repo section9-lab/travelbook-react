@@ -1,6 +1,11 @@
 import HeartButton from "./HeartButton";
 import ShowTravelCard from "./ShowTravelCard";
 import { useLanguage } from "../LanguageContext";
+import {
+  EnvironmentOutlined,
+} from "@ant-design/icons";
+
+
 
 // 旅行指南卡片组件
 const HomeTravelCardList = (guide) => {
@@ -45,8 +50,9 @@ const HomeTravelCardList = (guide) => {
           </span>
           <br />
           <br />
+          <EnvironmentOutlined/>
           <span style={{ fontSize: "12px" }}>
-            {t("destination")}:{guide.destination}
+            {guide.destination}
           </span>
         </div>
 

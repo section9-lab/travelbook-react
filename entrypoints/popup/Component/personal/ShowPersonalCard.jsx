@@ -1,15 +1,19 @@
-import { Avatar, Card } from "antd";
-import { 
-  BiEdit, 
-  BiTrash, 
-  BiShareAlt, 
-  BiSolidDownload,
-  BiSolidUser 
-} from "react-icons/bi";
+import { Avatar, Card, Popconfirm,message } from "antd";
+import {
+  ShareAltOutlined,
+  DownloadOutlined,
+  DeleteOutlined,
+  EditOutlined,
+  UserOutlined,
+  EnvironmentOutlined,
+} from "@ant-design/icons";
+
 const { Meta } = Card;
 
 const ShowPersonalCard = ({ travel, onShare, onRemove, onEdit }) => {
-  console.info(travel)
+  const clickDownload=(id)=>{
+    message.info("download develop....")
+  }
   return (
     <Card
       key={travel.id}
@@ -22,26 +26,62 @@ const ShowPersonalCard = ({ travel, onShare, onRemove, onEdit }) => {
           alt="example"
           src={travel.img_url}
           style={{
-            maxHeight: "200px",
+            maxHeight: "180px",
           }}
         />
       }
       actions={[
-        <BiShareAlt key="share" onClick={() => onShare(travel.id)} />,
-        <BiSolidDownload/>,
-        <BiTrash key="remove" onClick={() => onRemove(travel.id)} />,
-        <BiEdit key="edit" onClick={() => onEdit(travel)} />,
+        <Popconfirm
+          title="share the plan"
+          onConfirm={() => onShare(travel.id)}
+          okText="Yes"
+          cancelText="No"
+        >
+          <ShareAltOutlined key="share" />
+        </Popconfirm>,
+        <Popconfirm
+          title="Downloud the plan"
+          onConfirm={() => clickDownload(travel.id)}
+          okText="Yes"
+          cancelText="No"
+        >
+          <DownloadOutlined />
+        </Popconfirm>,
+        <Popconfirm
+          title="Delete the plan"
+          onConfirm={() => onRemove(travel.id)}
+          okText="Yes"
+          cancelText="No"
+        >
+          <DeleteOutlined key="remove" />
+        </Popconfirm>,
+        <Popconfirm
+          title="Edit the plan"
+          onConfirm={() => onEdit(travel)}
+          okText="Yes"
+          cancelText="No"
+        >
+          <EditOutlined key="edit" />
+        </Popconfirm>,
       ]}
     >
       <Meta
         //description={travel.title + "\n"}
+
         description={
-          <span style={{ color: 'rgba(0, 0, 0, 0.88)' }}>
-            {"Title: "+travel.title + "\n"}
-          </span>
+          <>
+            <span>{travel?.username}</span>
+            <div style={{ color: "rgba(0, 0, 0, 0.88)" }}>
+              <span >
+                {travel.title}
+              </span>
+              <br />
+              <EnvironmentOutlined />
+              <span>{travel?.destination}</span>
+            </div>
+          </>
         }
-        title={travel.destination}
-        avatar={<Avatar src={travel?.picture} icon={<BiSolidUser />}/>}
+        avatar={<Avatar src={travel?.picture} icon={<UserOutlined />} />}
       />
     </Card>
   );

@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { Button, message } from "antd";
-import { BsGoogle, BsWechat, BsBrowserChrome } from "react-icons/bs";
 import {
-  API_BASE_URL,
-  getAuthStatus,
-  googleAuth,
-  visitorLogin,
-} from "../../../Conf/api";
+  GoogleOutlined,
+  WechatOutlined,
+  ChromeOutlined,
+} from "@ant-design/icons";
+import { getAuthStatus, googleAuth, visitorLogin } from "../../../Conf/api";
+
+import API_BASE_URL from "../../../Conf/axiosInstance";
 
 const Login = ({ setAuthed, getUserId, setUserInfo }) => {
   const [loading, setLoading] = useState(false);
@@ -102,7 +103,7 @@ const Login = ({ setAuthed, getUserId, setUserInfo }) => {
 
                 // 尝试定期检查窗口是否已关闭
                 const checkWindow = setInterval(() => {
-                    if (authWindow && authWindow.closed) {
+                  if (authWindow && authWindow.closed) {
                     clearInterval(checkWindow);
                   } else {
                     try {
@@ -204,7 +205,7 @@ const Login = ({ setAuthed, getUserId, setUserInfo }) => {
             width: "100%",
           }}
         >
-          <BsGoogle style={{ marginRight: "8px" }} />
+          <GoogleOutlined style={{ marginRight: "8px" }} />
           Google Login
         </Button>
         <br />
@@ -223,7 +224,7 @@ const Login = ({ setAuthed, getUserId, setUserInfo }) => {
             borderStyle: "solid", // 设置边框样式
           }}
         >
-          <BsWechat style={{ marginRight: "8px" }} />
+          <WechatOutlined style={{ marginRight: "8px" }} />
           WeChat Login
         </Button>
         <br />
@@ -237,7 +238,7 @@ const Login = ({ setAuthed, getUserId, setUserInfo }) => {
             width: "100%",
           }}
         >
-          <BsBrowserChrome style={{ marginRight: "8px" }} />
+          <ChromeOutlined style={{ marginRight: "8px" }} />
           Visitors Use
         </Button>
       </div>
