@@ -1,9 +1,11 @@
 import React, { useState } from "react";
-import { BsFillHeartFill } from "react-icons/bs";
 import { update_hot } from "../../Conf/api";
 import { useLanguage } from "../LanguageContext";
 import { Avatar, message } from "antd";
-import { BiSolidUser } from "react-icons/bi";
+import {
+  UserOutlined,
+  HeartOutlined,
+} from '@ant-design/icons';
 
 const HeartButton = ({ guide, initialCount, travel_id }) => {
   const [hot, setHot] = useState(initialCount); // 初始热度值
@@ -39,8 +41,11 @@ const HeartButton = ({ guide, initialCount, travel_id }) => {
         marginTop: "auto" 
       }}
     >
-      <Avatar src={guide?.picture} icon={<BiSolidUser />} 
-      style={{ marginLeft: "10px" }} />
+      <Avatar 
+        src={guide?.picture} 
+        icon={<UserOutlined />} 
+        style={{ marginLeft: "10px" }}
+      />
       <div
         style={{
           display: "flex",
@@ -49,7 +54,8 @@ const HeartButton = ({ guide, initialCount, travel_id }) => {
           marginLeft: "80px", 
         }}
       >
-        <BsFillHeartFill
+        
+        <HeartOutlined
           onClick={handleClick}
           style={{
             marginLeft: "1px",

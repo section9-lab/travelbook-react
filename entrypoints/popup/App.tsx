@@ -2,8 +2,12 @@ import Home from "./Page/Home";
 import Personal from "./Page/Personal";
 import { LanguageProvider, useLanguage } from "./Component/LanguageContext";
 import Logo from "../../assets/logo.png";
-import { BiSolidHomeAlt2, BiSolidUser } from "react-icons/bi";
 import "./App.css";
+
+import {
+  HomeOutlined,
+  UserOutlined,
+} from '@ant-design/icons';
 
 // Logo Component
 const AppLogo = () => {
@@ -49,13 +53,13 @@ const App = () => {
           className={`nav-button ${activePage === "square" ? "active" : ""}`}
           onClick={() => setActivePage("square")}
         >
-          <BiSolidHomeAlt2 />
+          <HomeOutlined />
         </button>
         <button
           className={`nav-button ${activePage === "personal" ? "active" : ""}`}
           onClick={() => setActivePage("personal")}
         >
-          <BiSolidUser />
+          <UserOutlined />
         </button>
       </div>
     </div>
