@@ -31,32 +31,32 @@ const TravelGuideEdit = ({ inGuide, onSave, onCancel }) => {
   let aboutList = [
     {
       key: "summary",
-      label: <AlertOutlined />,
+      label: <AlertOutlined style={{ fontSize: '22px' }}/>,
       content: guide?.about?.summary || "No information available",
     },
     {
       key: "hot_spots",
-      label: <CameraOutlined/>,
+      label: <CameraOutlined style={{ fontSize: '22px' }}/>,
       content: guide?.about?.hot_spots || "No information available", // 如果不是数组，使用默认值
     },
     {
       key: "transport",
-      label: <CarOutlined />,
+      label: <CarOutlined style={{ fontSize: '22px' }}/>,
       content: guide?.about?.transport || "No information available",
     },
     {
       key: "stay",
-      label: <HomeOutlined />,
+      label: <HomeOutlined style={{ fontSize: '22px' }}/>,
       content: guide?.about?.stay || "No information available",
     },
     {
       key: "food",
-      label: <CoffeeOutlined />,
+      label: <CoffeeOutlined style={{ fontSize: '22px' }}/>,
       content: guide?.about?.food || "No information available",
     },
     {
       key: "weather",
-      label: <CloudOutlined />,
+      label: <CloudOutlined style={{ fontSize: '22px' }}/>,
       content: guide?.about?.weather || "No information available",
     },
   ];

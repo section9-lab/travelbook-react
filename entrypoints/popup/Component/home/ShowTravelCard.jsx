@@ -22,12 +22,12 @@ const ShowTravelCard = ({ guide, isOpen, onClose }) => {
   let tableList = [
     {
       key: "summary",
-      label: <AlertOutlined />,
+      label: <AlertOutlined  style={{ fontSize: '22px' }}/>,
       content: guide?.about?.summary || "No information available",
     },
     {
       key: "hot_spots",
-      label: <CameraOutlined/>,
+      label: <CameraOutlined style={{ fontSize: '22px' }}/>,
       content: guide?.about?.hot_spots?.length > 0 ? (
         <div>
           {guide.about.hot_spots.map((spot, index) => (
@@ -43,66 +43,22 @@ const ShowTravelCard = ({ guide, isOpen, onClose }) => {
     },
     {
       key: "transport",
-      label: <CarOutlined />,
+      label: <CarOutlined style={{ fontSize: '22px' }}/>,
       content: guide?.about?.transport || "No information available",
     },
     {
       key: "stay",
-      label: <HomeOutlined />,
+      label: <HomeOutlined style={{ fontSize: '22px' }}/>,
       content: guide?.about?.stay || "No information available",
     },
     {
       key: "food",
-      label: <CoffeeOutlined />,
+      label: <CoffeeOutlined style={{ fontSize: '22px' }}/>,
       content: guide?.about?.food || "No information available",
     },
     {
       key: "weather",
-      label: <CloudOutlined />,
-      content: guide?.about?.weather || "No information available",
-    },
-  ];
-
-  const tableList1 = [
-    {
-      key: "summary",
-      label: "Summary",
-      content: guide?.about?.summary || "No information available",
-    },
-    {
-      key: "hot_spots",
-      label: "HotSpots",
-      content: guide?.about?.hot_spots?.length > 0 ? (
-        <div>
-          {guide.about.hot_spots.map((spot, index) => (
-            <div key={index} style={{ display: "flex", alignItems: "center", marginBottom: "4px" }}>
-              <EnvironmentOutlined style={{ marginRight: "8px" }} />
-              {spot}
-            </div>
-          ))}
-        </div>
-      ) : (
-        "No information available"
-      ),
-    },
-    {
-      key: "transport",
-      label: "Transport",
-      content: guide?.about?.transport || "No information available",
-    },
-    {
-      key: "stay",
-      label: "Stay",
-      content: guide?.about?.stay || "No information available",
-    },
-    {
-      key: "food",
-      label: "Food",
-      content: guide?.about?.food || "No information available",
-    },
-    {
-      key: "weather",
-      label: "Weather",
+      label: <CloudOutlined style={{ fontSize: '22px' }}/>,
       content: guide?.about?.weather || "No information available",
     },
   ];

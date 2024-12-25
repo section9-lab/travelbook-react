@@ -37,7 +37,7 @@ const ShowPersonalCard = ({ travel, onShare, onRemove, onEdit }) => {
           okText="Yes"
           cancelText="No"
         >
-          <ShareAltOutlined key="share" />
+          <ShareAltOutlined key="share" style={{ fontSize: '20px' }}/>
         </Popconfirm>,
         <Popconfirm
           title="Downloud the plan"
@@ -45,7 +45,7 @@ const ShowPersonalCard = ({ travel, onShare, onRemove, onEdit }) => {
           okText="Yes"
           cancelText="No"
         >
-          <DownloadOutlined />
+          <DownloadOutlined style={{ fontSize: '20px' }}/>
         </Popconfirm>,
         <Popconfirm
           title="Delete the plan"
@@ -53,10 +53,10 @@ const ShowPersonalCard = ({ travel, onShare, onRemove, onEdit }) => {
           okText="Yes"
           cancelText="No"
         >
-          <DeleteOutlined key="remove" />
+          <DeleteOutlined key="remove" style={{ fontSize: '20px' }}/>
         </Popconfirm>,
 
-        <EditOutlined key="edit" onClick={() => onEdit(travel)} />,
+        <EditOutlined key="edit" onClick={() => onEdit(travel)} style={{ fontSize: '20px' }}/>,
       ]}
     >
       <Meta

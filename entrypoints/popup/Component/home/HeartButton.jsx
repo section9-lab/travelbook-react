@@ -54,10 +54,10 @@ const HeartButton = ({ guide, initialCount, travel_id }) => {
           marginLeft: "80px", 
         }}
       >
-        
         <HeartOutlined
           onClick={handleClick}
           style={{
+            fontSize: '20px', 
             marginLeft: "1px",
             color: isClicked ? "red" : "black", // 点击时显示红色
             transform: isClicked ? "scale(1.3)" : "scale(1)", // 动画放大
