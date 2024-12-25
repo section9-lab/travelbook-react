@@ -42,14 +42,14 @@ const ShowTravelCard = ({ guide, isOpen, onClose }) => {
       ),
     },
     {
+      key: "weather",
+      label: <CloudOutlined style={{ fontSize: '22px' }}/>,
+      content: guide?.about?.weather || "No information available",
+    },
+    {
       key: "transport",
       label: <CarOutlined style={{ fontSize: '22px' }}/>,
       content: guide?.about?.transport || "No information available",
-    },
-    {
-      key: "stay",
-      label: <HomeOutlined style={{ fontSize: '22px' }}/>,
-      content: guide?.about?.stay || "No information available",
     },
     {
       key: "food",
@@ -57,9 +57,9 @@ const ShowTravelCard = ({ guide, isOpen, onClose }) => {
       content: guide?.about?.food || "No information available",
     },
     {
-      key: "weather",
-      label: <CloudOutlined style={{ fontSize: '22px' }}/>,
-      content: guide?.about?.weather || "No information available",
+      key: "stay",
+      label: <HomeOutlined style={{ fontSize: '22px' }}/>,
+      content: guide?.about?.stay || "No information available",
     },
   ];
 

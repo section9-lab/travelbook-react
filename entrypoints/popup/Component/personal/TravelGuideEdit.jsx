@@ -40,14 +40,14 @@ const TravelGuideEdit = ({ inGuide, onSave, onCancel }) => {
       content: guide?.about?.hot_spots || "No information available", // 如果不是数组，使用默认值
     },
     {
+      key: "weather",
+      label: <CloudOutlined style={{ fontSize: '22px' }}/>,
+      content: guide?.about?.weather || "No information available",
+    },
+    {
       key: "transport",
       label: <CarOutlined style={{ fontSize: '22px' }}/>,
       content: guide?.about?.transport || "No information available",
-    },
-    {
-      key: "stay",
-      label: <HomeOutlined style={{ fontSize: '22px' }}/>,
-      content: guide?.about?.stay || "No information available",
     },
     {
       key: "food",
@@ -55,9 +55,9 @@ const TravelGuideEdit = ({ inGuide, onSave, onCancel }) => {
       content: guide?.about?.food || "No information available",
     },
     {
-      key: "weather",
-      label: <CloudOutlined style={{ fontSize: '22px' }}/>,
-      content: guide?.about?.weather || "No information available",
+      key: "stay",
+      label: <HomeOutlined style={{ fontSize: '22px' }}/>,
+      content: guide?.about?.stay || "No information available",
     },
   ];
 
