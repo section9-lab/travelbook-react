@@ -80,6 +80,7 @@ const Login = ({ setAuthed, getUserId, setUserInfo }) => {
       });
   };
 
+  
   const googleLogin = async () => {
     googleAuth()
       .then((data) => {
@@ -134,6 +135,9 @@ const Login = ({ setAuthed, getUserId, setUserInfo }) => {
         console.error("认证过程出错:", error);
       });
   };
+
+
+
 
   const clickWeChatLogin = async () => {
     message.info("Wechat is dev....");

@@ -2,7 +2,7 @@
   "name": "TravelBook",
   "description": "This is an application that uses AI to generate travel plans",
   "private": true,
-  "version": "0.1.0",
+  "version": "0.1.1",
   "type": "module",
   "scripts": {
     "dev": "wxt",
