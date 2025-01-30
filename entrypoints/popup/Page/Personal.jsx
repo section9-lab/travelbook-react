@@ -3,9 +3,9 @@ import { Spin, Avatar, Card, message } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 import CryptoJS from "crypto-js";
 import { useLanguage } from "../Component/LanguageContext";
-import AddTravelPlanModal from "../Component/personal/AddTravelPlanModal";
-import TravelGuideDisplay from "../Component/personal/TravelGuideDisplay";
-import ShowPersonalCard from "../Component/personal/ShowPersonalCard";
+import AddTravelPlan from "../Component/personal/add/AddTravelPlan.jsx";
+import TravelGuideEdit from "../Component/personal/TravelGuideEdit.jsx";
+import ShowPersonalCard from "../Component/personal/PersonalListCard.jsx";
 import Login from "../Component/personal/auth/Login.jsx";
 
 import {
@@ -31,7 +31,8 @@ const Personal = () => {
     setIsAuthed(value);
     localStorage.setItem("isAuthed", value);
   };
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isShowAddCard, setIsShowAddCard] = useState(false);
+  console.log("isShowAddCard:", isShowAddCard); // 用来检查状态变化
   const [editingPlan, setEditingPlan] = useState(null);
   const [plans, setPlans] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -44,20 +45,20 @@ const Personal = () => {
   };
 
   useEffect(() => {
-    console.info("Personal useEffect plans:", plans);
-    console.info("isAuthed", isAuthed);
+    console.info("useEffect plans:", plans);
     console.info("userInfo:", userInfo);
-    if (plans && plans.length > 0) {
-      console.info("Plans already exist, skipping fetch.");
-      return; // 如果有数据，不发起请求
-    } else {
-      getPersonalPlanList();
+    console.info("isAuthed", isAuthed);
+    if (!isAuthed || plans.length > 0) {
+      // 如果有数据，不发起请求
+      return;
     }
-  }, []);
+    console.info("test");
+    getPersonalPlanList();
+  }, [isAuthed]);
 
   const getPersonalPlanList = async () => {
     setLoading(true);
-    console.info("==travel_plans_list==");
+    console.info("==getPersonalPlanList==");
     const userID = getUserId();
     console.info(userID);
     await travel_plans_list(userID)
@@ -169,15 +170,10 @@ const Personal = () => {
       });
   };
 
-  const toggleModal = (target) => {
-    console.info("toggleModal:", target);
-    setIsModalOpen(target);
-  };
-
   if (editingPlan) {
     console.info("editingPlan:", editingPlan);
     return (
-      <TravelGuideDisplay
+      <TravelGuideEdit
         inGuide={
           editingPlan || {
             title: `${editingPlan.title}`,
@@ -265,6 +261,15 @@ const Personal = () => {
     </>
   );
 
+  if (isShowAddCard === true) {
+    return (
+      <AddTravelPlan
+        isShowAddCard={isShowAddCard}
+        setIsShowAddCard={() => setIsShowAddCard(false)}
+        onSubmit={addPlan}
+      />
+    );
+  }
   return (
     <div className="personal-center">
       {
@@ -291,14 +296,12 @@ const Personal = () => {
 
       {loading ? <LoadingView /> : <ContentView plans={plans} />}
 
-      <button className="add-plan-button" onClick={() => toggleModal(true)}>
+      <button
+        className="add-plan-button"
+        onClick={() => setIsShowAddCard(true)}
+      >
         +
       </button>
-      <AddTravelPlanModal
-        isOpen={isModalOpen}
-        onClose={() => toggleModal(false)}
-        onSubmit={addPlan}
-      />
     </div>
   );
 };

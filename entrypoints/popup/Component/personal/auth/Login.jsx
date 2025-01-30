@@ -62,26 +62,30 @@ const Login = ({ setAuthed, getUserId, setUserInfo }) => {
 
   // 检查登录状态
   useEffect(() => {
-    const checkAuthStatus = async () => {
-      const userID = getUserId();
-      getAuthStatus(userID)
-        .then((response) => {
-          if (response.authenticated) {
-            setAuthed(true);
-            setUserInfo(response.user);
-          }
-        })
-        .catch((error) => {
-          console.error("检查登录状态出错:", error);
-        });
-    };
-
     checkAuthStatus();
   }, []);
 
+  const checkAuthStatus = async () => {
+    const userID = getUserId();
+    getAuthStatus(userID)
+      .then((response) => {
+        console.info("checkAuthStatus", response.user);
+        if (response.authenticated) {
+          setAuthed(true);
+          setUserInfo(response.user);
+        }
+      })
+      .catch((error) => {
+        console.error("检查登录状态出错:", error);
+      });
+  };
+
+  
   const googleLogin = async () => {
     googleAuth()
       .then((data) => {
+    googleAuth()
+        console.info("googleAuth:",data)
         if (data.auth_url) {
           // 打开新窗口
           const authWindow = window.open(
@@ -112,7 +116,7 @@ const Login = ({ setAuthed, getUserId, setUserInfo }) => {
                       console.log("无法自动关闭窗口");
                     }
                   }
-                }, 1000);
+                }, 3000);
               }
             }
           };
@@ -124,13 +128,16 @@ const Login = ({ setAuthed, getUserId, setUserInfo }) => {
               clearInterval(checker);
               window.removeEventListener("message", handleMessage);
             }
-          }, 1000);
+          }, 3000);
         }
       })
       .catch((error) => {
         console.error("认证过程出错:", error);
       });
   };
+
+
+
 
   const clickWeChatLogin = async () => {
     message.info("Wechat is dev....");

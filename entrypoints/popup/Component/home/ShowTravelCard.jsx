@@ -1,6 +1,12 @@
 import { Tabs, Card } from "antd";
-import {
+import { 
   EnvironmentOutlined,
+  AlertOutlined,
+  CarOutlined,
+  CameraOutlined,
+  CoffeeOutlined,
+  HomeOutlined,
+  CloudOutlined,
 } from "@ant-design/icons";
 
 
@@ -13,15 +19,15 @@ const ShowTravelCard = ({ guide, isOpen, onClose }) => {
     console.log(key);
   };
 
-  const tableList = [
+  let tableList = [
     {
       key: "summary",
-      label: "Summary",
+      label: <AlertOutlined  style={{ fontSize: '22px' }}/>,
       content: guide?.about?.summary || "No information available",
     },
     {
       key: "hot_spots",
-      label: "HotSpots",
+      label: <CameraOutlined style={{ fontSize: '22px' }}/>,
       content: guide?.about?.hot_spots?.length > 0 ? (
         <div>
           {guide.about.hot_spots.map((spot, index) => (
@@ -36,26 +42,27 @@ const ShowTravelCard = ({ guide, isOpen, onClose }) => {
       ),
     },
     {
+      key: "weather",
+      label: <CloudOutlined style={{ fontSize: '22px' }}/>,
+      content: guide?.about?.weather || "No information available",
+    },
+    {
       key: "transport",
-      label: "Transport",
+      label: <CarOutlined style={{ fontSize: '22px' }}/>,
       content: guide?.about?.transport || "No information available",
     },
     {
-      key: "stay",
-      label: "Stay",
-      content: guide?.about?.stay || "No information available",
-    },
-    {
       key: "food",
-      label: "Food",
+      label: <CoffeeOutlined style={{ fontSize: '22px' }}/>,
       content: guide?.about?.food || "No information available",
     },
     {
-      key: "weather",
-      label: "Weather",
-      content: guide?.about?.weather || "No information available",
+      key: "stay",
+      label: <HomeOutlined style={{ fontSize: '22px' }}/>,
+      content: guide?.about?.stay || "No information available",
     },
   ];
+
   const items = tableList.map((tab) => ({
     label: tab.label,
     key: tab.key,
